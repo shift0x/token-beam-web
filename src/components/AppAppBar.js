@@ -11,13 +11,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Sitemark from './SitemarkIcon';
 import { scrollToSection } from '../lib/navigation';
+import Web3WalletConnection from '../features/web3-wallet-connection/Web3WalletConnection';
+
 
 function AppAppBar() {
   const [open, setOpen] = React.useState(false);
+  const { pathname } = useLocation();
+  const isHomePage = pathname == "/";
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -28,6 +32,7 @@ function AppAppBar() {
       setOpen(false);
     })
   };
+
 
   return (
     <AppBar
@@ -112,12 +117,19 @@ function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Button color="primary" variant="text" size="small" component={Link} to="/affiliates">
-              Affiliates
-            </Button>
-            <Button color="primary" variant="contained" size="small" component={Link} to="/swap">
-              Swap
-            </Button>
+          { isHomePage ? (
+            <Container>
+              <Button color="primary" variant="text" size="small" component={Link} to="/affiliates">
+                Affiliates
+              </Button>
+              <Button color="primary" variant="contained" size="small" component={Link} to="/swap">
+                Swap
+              </Button>
+            </Container>
+          ) : <Web3WalletConnection active={true} /> }
+
+
+            
           </Box>
           <Box sx={{ display: { sm: 'flex', md: 'none' } }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>

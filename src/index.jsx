@@ -7,6 +7,7 @@ import SwapPage from './app/pages/SwapPage';
 import HomePage from './app/pages/HomePage';
 import AffiliatesPage from './app/pages/AffiliatesPage';
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -34,6 +35,8 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThirdwebProvider activeChain="ethereum" clientId="10b979e90e7b1522923fc2edcec0b719">
+      <RouterProvider router={router} />
+    </ThirdwebProvider>
   </React.StrictMode>
 );
