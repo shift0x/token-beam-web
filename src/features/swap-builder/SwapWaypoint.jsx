@@ -28,7 +28,10 @@ function SwapWaypoint({label, details, networks, update}){
 
         let filteredTokens = allTokens
             .filter((token) => {
-                return searchText.trim().length == 0 || token.name.toLowerCase().indexOf(searchValue) != -1
+                return searchText.trim().length == 0 || 
+                    token.name.toLowerCase().indexOf(searchValue) != -1 ||
+                    token.symbol.toLowerCase().indexOf(searchValue) != -1 ||
+                    token.address.toLowerCase().indexOf(searchValue) != -1
             });
 
 
@@ -92,7 +95,7 @@ function SwapWaypoint({label, details, networks, update}){
                         { selectedTokenId == -1 ? <>Choose a token</>:
                             <>
                                 <Avatar src={selectedToken.image} sx={{width: "25px", height: "25px", padding: "2px"}} />
-                                <span style={{color: "#000", fontWeight: "600", fontSize: "12px"}}>{selectedToken.name} </span>
+                                <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol} </span>
                                 
                             </>
                         }   
