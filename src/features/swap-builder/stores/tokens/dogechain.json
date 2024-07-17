@@ -1,0 +1,93 @@
+{
+    "id": "dogechain",
+    "tokens": [
+        {
+            "id": "quickswap",
+            "symbol": "quick",
+            "name": "Quickswap",
+            "image": "https://coin-images.coingecko.com/coins/images/25393/large/quickswap.png?1696524525",
+            "price": 0.04138919,
+            "market_cap": 29549297,
+            "market_cap_rank": 838,
+            "total_volume": 2603236,
+            "address": "0xb12c13e66ade1f72f71834f2fc5082db8c091358"
+        },
+        {
+            "id": "doge-eat-doge",
+            "symbol": "omnom",
+            "name": "Doge Eat Doge",
+            "image": "https://coin-images.coingecko.com/coins/images/26878/large/omnom.jpg?1696525937",
+            "price": 4.0582e-8,
+            "market_cap": 12584038,
+            "market_cap_rank": 1226,
+            "total_volume": 138019,
+            "address": "0xe3fca919883950c5cd468156392a6477ff5d18de"
+        },
+        {
+            "id": "dogechain",
+            "symbol": "dc",
+            "name": "Dogechain",
+            "image": "https://coin-images.coingecko.com/coins/images/26828/large/dogechain.jpeg?1696525887",
+            "price": 0.00035712,
+            "market_cap": 10529396,
+            "market_cap_rank": 1330,
+            "total_volume": 1963980,
+            "address": "0x7b4328c127b85369d9f82ca0503b000d09cf9180"
+        },
+        {
+            "id": "duckereum",
+            "symbol": "ducker",
+            "name": "Duckereum",
+            "image": "https://coin-images.coingecko.com/coins/images/26325/large/coin.png?1696525407",
+            "price": 0.00288633,
+            "market_cap": 288633,
+            "market_cap_rank": 3507,
+            "total_volume": 1392.55,
+            "address": "0x264c1383ea520f73dd837f915ef3a732e204a493"
+        },
+        {
+            "id": "dogira",
+            "symbol": "dogira",
+            "name": "Dogira",
+            "image": "https://coin-images.coingecko.com/coins/images/14634/large/IQgaRw0.png?1696514312",
+            "price": 0.00008843,
+            "market_cap": 65161,
+            "market_cap_rank": 4216,
+            "total_volume": 53.62,
+            "address": "0xf480f38c366daac4305dc484b2ad7a496ff00cea"
+        },
+        {
+            "id": "yodeswap",
+            "symbol": "yode",
+            "name": "YodeSwap",
+            "image": "https://coin-images.coingecko.com/coins/images/26944/large/yodeswap.png?1696525999",
+            "price": 0.01178539,
+            "market_cap": 462.63,
+            "market_cap_rank": 4666,
+            "total_volume": 690.9,
+            "address": "0x6fc4563460d5f45932c473334d5c1c5b4aea0e01"
+        },
+        {
+            "id": "cardinals",
+            "symbol": "cardi",
+            "name": "Cardinals (DRC-20)",
+            "image": "https://coin-images.coingecko.com/coins/images/34265/large/0104.png?1704388821",
+            "price": 0.04146858,
+            "market_cap": 0,
+            "market_cap_rank": null,
+            "total_volume": 458180,
+            "address": "30a24aa1578bd74340d90605fa8b5709e18ab9bebc87b90f3bbb02fcebcfa6d8"
+        },
+        {
+            "id": "icecream",
+            "symbol": "ice",
+            "name": "IceCreamSwap",
+            "image": "https://coin-images.coingecko.com/coins/images/26237/large/icecream.png?1696525321",
+            "price": 1.48,
+            "market_cap": 0,
+            "market_cap_rank": null,
+            "total_volume": 4008.27,
+            "address": "0x81bcea03678d1cef4830942227720d542aa15817"
+        }
+    ]
+}

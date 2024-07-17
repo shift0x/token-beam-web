@@ -1,0 +1,64 @@
+{
+    "arbitrum-one": { 
+        "name": "arbitrum", 
+        "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+        "gasToken": {
+            "symbol": "eth",
+            "name": "ether",
+            "address": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+        },
+        "providers": [ "chainflip", "0x", "tokenbeam-swap" ]
+    },
+    "avalanche": {
+        "name": "avalanche",
+        "icon": "https://assets.coingecko.com/coins/images/12559/standard/Avalanche_Circle_RedWhite_Trans.png",
+        "gasToken": {
+            "symbol": "avax",
+            "name": "avalanche",
+            "address": "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7"
+        },
+        "providers": [ "thorchain", "0x" ]
+    },
+    "binance-smart-chain": {
+        "name": "binance smart chain",
+        "icon": "https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png",
+        "gasToken": {
+            "symbol": "bnb",
+            "name": "bnb token",
+            "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+        },
+        "providers": [ "thorchain", "0x" ]
+    },
+    "ethereum": {
+        "name": "ethereum",
+        "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
+        "gasToken": {
+            "symbol": "eth",
+            "name": "ether",
+            "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+        },
+        "providers": [ "thorchain", "chainflip", "0x" ]
+    },
+    "ethereum-sepolia": {
+        "name": "ethereum-sepolia",
+        "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
+        "gasToken": {
+            "symbol": "eth",
+            "name": "ether",
+            "address": ""
+        },
+        "providers": [ "chainflip", "0x", "tokenbeam-swap" ],
+        "testnet": true
+    },
+    "arbitrum-sepolia": {
+        "name": "arbitrum-sepolia",
+        "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+        "gasToken": {
+            "symbol": "eth",
+            "name": "ether",
+            "address": ""
+        },
+        "providers": [ "chainflip", "0x", "tokenbeam-swap" ],
+        "testnet": true
+    }
+}

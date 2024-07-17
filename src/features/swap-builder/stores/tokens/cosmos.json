@@ -1,0 +1,269 @@
+{
+    "id": "cosmos",
+    "tokens": [
+        {
+            "id": "dai",
+            "symbol": "dai",
+            "name": "Dai",
+            "image": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+            "price": 1,
+            "market_cap": 5334134441,
+            "market_cap_rank": 23,
+            "total_volume": 132267340,
+            "address": "ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7"
+        },
+        {
+            "id": "cosmos",
+            "symbol": "atom",
+            "name": "Cosmos Hub",
+            "image": "https://coin-images.coingecko.com/coins/images/1481/large/cosmos_hub.png?1696502525",
+            "price": 6.64,
+            "market_cap": 2590641028,
+            "market_cap_rank": 39,
+            "total_volume": 209635749,
+            "address": "uatom"
+        },
+        {
+            "id": "injective-protocol",
+            "symbol": "inj",
+            "name": "Injective",
+            "image": "https://coin-images.coingecko.com/coins/images/12882/large/Secondary_Symbol.png?1696512670",
+            "price": 25.72,
+            "market_cap": 2493603051,
+            "market_cap_rank": 46,
+            "total_volume": 191117759,
+            "address": "ibc/64BA6E31FE887D66C6F8F31C7B1A80C7CA179239677B4088BB55F5EA07DBE273"
+        },
+        {
+            "id": "celestia",
+            "symbol": "tia",
+            "name": "Celestia",
+            "image": "https://coin-images.coingecko.com/coins/images/31967/large/tia.jpg?1696530772",
+            "price": 6.45,
+            "market_cap": 1268899906,
+            "market_cap_rank": 73,
+            "total_volume": 159043488,
+            "address": "ibc/D79E7D83AB399BFFF93433E54FAA480C191248FC556924A2A8351AE2638B3877"
+        },
+        {
+            "id": "dydx-chain",
+            "symbol": "dydx",
+            "name": "dYdX",
+            "image": "https://coin-images.coingecko.com/coins/images/32594/large/dydx.png?1698673495",
+            "price": 1.4,
+            "market_cap": 846479508,
+            "market_cap_rank": 95,
+            "total_volume": 31078178,
+            "address": "ibc/831F0B1BBB1D08A2B75311892876D71565478C532967545476DF4C2D7492E48C"
+        },
+        {
+            "id": "dymension",
+            "symbol": "dym",
+            "name": "Dymension",
+            "image": "https://coin-images.coingecko.com/coins/images/34182/large/dym.png?1704253006",
+            "price": 1.87,
+            "market_cap": 355044361,
+            "market_cap_rank": 181,
+            "total_volume": 85984782,
+            "address": "ibc/9A76CDF0CBCEF37923F32518FA15E5DC92B9F56128292BC4D63C4AEA76CBB110"
+        },
+        {
+            "id": "stargaze",
+            "symbol": "stars",
+            "name": "Stargaze",
+            "image": "https://coin-images.coingecko.com/coins/images/22363/large/pink_star_200.png?1711311188",
+            "price": 0.01156753,
+            "market_cap": 29234337,
+            "market_cap_rank": 843,
+            "total_volume": 129962,
+            "address": "ibc/987C17B11ABC2B20019178ACE62929FE9840202CE79498E29FE8E5CB02B7C0A4"
+        },
+        {
+            "id": "mars-protocol-a7fcbcfb-fd61-4017-92f0-7ee9f9cc6da3",
+            "symbol": "mars",
+            "name": "Mars Protocol",
+            "image": "https://coin-images.coingecko.com/coins/images/28896/large/mars.png?1696527872",
+            "price": 0.055901,
+            "market_cap": 20475682,
+            "market_cap_rank": 994,
+            "total_volume": 14490.25,
+            "address": "ibc/573FCD90FACEE750F55A8864EF7D38265F07E5A9273FA0E8DAFD39951332B580"
+        },
+        {
+            "id": "juno-network",
+            "symbol": "juno",
+            "name": "JUNO",
+            "image": "https://coin-images.coingecko.com/coins/images/19249/large/Juno_Logo_%28Salmon%29_%282%29.png?1696518694",
+            "price": 0.135757,
+            "market_cap": 10820401,
+            "market_cap_rank": 1314,
+            "total_volume": 41041,
+            "address": "ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED"
+        },
+        {
+            "id": "sommelier",
+            "symbol": "somm",
+            "name": "Sommelier",
+            "image": "https://coin-images.coingecko.com/coins/images/23308/large/somm_new.png?1696522525",
+            "price": 0.02481378,
+            "market_cap": 7241039,
+            "market_cap_rank": 1531,
+            "total_volume": 309091,
+            "address": "ibc/9BBA9A1C257E971E38C1422780CE6F0B0686F0A3085E2D61118D904BFE0F5F5E"
+        },
+        {
+            "id": "ixo",
+            "symbol": "ixo",
+            "name": "IXO",
+            "image": "https://coin-images.coingecko.com/coins/images/16829/large/ixo.png?1696516397",
+            "price": 0.04337166,
+            "market_cap": 3756474,
+            "market_cap_rank": 1921,
+            "total_volume": 600.89,
+            "address": "ibc/F3FF7A84A73B62921538642F9797C423D2B4C4ACB3C7FCFFCE7F12AA69909C4B"
+        },
+        {
+            "id": "ki",
+            "symbol": "xki",
+            "name": "KI",
+            "image": "https://coin-images.coingecko.com/coins/images/15694/large/xki-color.png?1696515323",
+            "price": 0.00572781,
+            "market_cap": 3180156,
+            "market_cap_rank": 2016,
+            "total_volume": 1706.99,
+            "address": "ibc/B547DC9B897E7C3AA5B824696110B8E3D2C31E3ED3F02FF363DCBAD82457E07E"
+        },
+        {
+            "id": "assetmantle",
+            "symbol": "mntl",
+            "name": "AssetMantle",
+            "image": "https://coin-images.coingecko.com/coins/images/25181/large/thumbnail.png?1696524326",
+            "price": 0.00065013,
+            "market_cap": 995813,
+            "market_cap_rank": 2757,
+            "total_volume": 91086,
+            "address": "ibc/00F2B62EB069321A454B708876476AFCD9C23C8C9C4A5A206DDF1CD96B645057"
+        },
+        {
+            "id": "stride-staked-injective",
+            "symbol": "stinj",
+            "name": "Stride Staked Injective",
+            "image": "https://coin-images.coingecko.com/coins/images/29953/large/stinj.png?1696528880",
+            "price": 32.78,
+            "market_cap": 650013,
+            "market_cap_rank": 3031,
+            "total_volume": 188033,
+            "address": "inj10fd06xl4q6jp9qlhemvm6ymmm83ppj2g8rzquw"
+        },
+        {
+            "id": "odin-protocol",
+            "symbol": "odin",
+            "name": "Odin Protocol",
+            "image": "https://coin-images.coingecko.com/coins/images/14934/large/ODIN_iso_black.png?1696514593",
+            "price": 0.01757804,
+            "market_cap": 486320,
+            "market_cap_rank": 3208,
+            "total_volume": 2238.62,
+            "address": "ibc/c360ef34a86d334f625e4cbb7da3223aea97174b61f35bb3758081a8160f7d9b"
+        },
+        {
+            "id": "stride-staked-stars",
+            "symbol": "ststars",
+            "name": "Stride Staked Stars",
+            "image": "https://coin-images.coingecko.com/coins/images/29952/large/ststars.png?1696528879",
+            "price": 0.01731745,
+            "market_cap": 453446,
+            "market_cap_rank": 3251,
+            "total_volume": 519.93,
+            "address": "ibc/5DD1F95ED336014D00CE2520977EC71566D282F9749170ADC83A392E0EA7426A"
+        },
+        {
+            "id": "kleomedes",
+            "symbol": "kleo",
+            "name": "Kleomedes",
+            "image": "https://coin-images.coingecko.com/coins/images/29614/large/logo_blue_500x500.png?1696528550",
+            "price": 0.0015784,
+            "market_cap": 357380,
+            "market_cap_rank": 3402,
+            "total_volume": 49.95,
+            "address": "juno10gthz5ufgrpuk5cscve2f0hjp56wgp90psqxcrqlg4m9mcu9dh8q4864xy"
+        },
+        {
+            "id": "desmos",
+            "symbol": "dsm",
+            "name": "Desmos",
+            "image": "https://coin-images.coingecko.com/coins/images/22610/large/dsm.png?1696521927",
+            "price": 0.00295144,
+            "market_cap": 248383,
+            "market_cap_rank": 3583,
+            "total_volume": 1070.73,
+            "address": "ibc/EA4C0A9F72E2CEDF10D0E7A9A6A22954DB3444910DB5BE980DF59B05A46DAD1C"
+        },
+        {
+            "id": "posthuman",
+            "symbol": "phmn",
+            "name": "POSTHUMAN",
+            "image": "https://coin-images.coingecko.com/coins/images/28207/large/phmn_logo.png?1696527209",
+            "price": 13.54,
+            "market_cap": 163826,
+            "market_cap_rank": 3804,
+            "total_volume": 197.88,
+            "address": "juno1rws84uz7969aaa7pej303udhlkt3j9ca0l3egpcae98jwak9quzq8szn2l"
+        },
+        {
+            "id": "composite",
+            "symbol": "cmst",
+            "name": "Composite",
+            "image": "https://coin-images.coingecko.com/coins/images/28696/large/CMST_TOKEN.png?1696527678",
+            "price": 0.221588,
+            "market_cap": 68607,
+            "market_cap_rank": 4203,
+            "total_volume": 218.87,
+            "address": "ibc/9EC8A1701813BB7B73BFED2496009ABB2C8BF187E6CDFA788D77F68E08BC05CD"
+        },
+        {
+            "id": "crescent-network",
+            "symbol": "cre",
+            "name": "Crescent Network",
+            "image": "https://coin-images.coingecko.com/coins/images/25061/large/logo_200x200.png?1696524211",
+            "price": 0.00011024,
+            "market_cap": 52082,
+            "market_cap_rank": 4289,
+            "total_volume": 23.22,
+            "address": "ucre"
+        },
+        {
+            "id": "harbor-2",
+            "symbol": "harbor",
+            "name": "Harbor Protocol",
+            "image": "https://coin-images.coingecko.com/coins/images/31162/large/HARBOR_icon.jpeg?1696529991",
+            "price": 0.00021339,
+            "market_cap": 0,
+            "market_cap_rank": null,
+            "total_volume": 0.00757105,
+            "address": "ibc/BAEA8E5E532DD3442D8938DA6E3C456EEE52CFD2CCC1B3512B0A77E7BEDB2F45"
+        },
+        {
+            "id": "meme-network",
+            "symbol": "meme",
+            "name": "Meme Network",
+            "image": "https://coin-images.coingecko.com/coins/images/28749/large/meme.png?1696527728",
+            "price": 0.00000752,
+            "market_cap": 0,
+            "market_cap_rank": null,
+            "total_volume": 687.63,
+            "address": "ibc/67C89B8B0A70C08F093C909A4DD996DD10E0494C87E28FD9A551697BF173D4CA"
+        },
+        {
+            "id": "ndau",
+            "symbol": "ndau",
+            "name": "Ndau",
+            "image": "https://coin-images.coingecko.com/coins/images/9620/large/sLTq8JxE_400x400.jpg?1696509692",
+            "price": 4.85,
+            "market_cap": 0,
+            "market_cap_rank": null,
+            "total_volume": 19318.5,
+            "address": ""
+        }
+    ]
+}

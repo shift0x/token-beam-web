@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { Container } from '@mui/system';
 
 function Web3WalletConnection({active}){
     return (
-        <Container>
+        <>
             { active ? <ConnectWallet theme="dark" style={{
                 outline: 0,
                 border: 0,
@@ -26,7 +25,7 @@ function Web3WalletConnection({active}){
                 backgroundColor: "hsl(210, 98%, 48%)",
                 backgroundImage: "linear-gradient(to bottom, hsla(210, 98%, 48%, 0.8), hsl(210, 98%, 42%))",
             }} /> : null }
-        </Container>
+        </>
     )
 };
 
