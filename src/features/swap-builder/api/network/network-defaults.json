@@ -1,0 +1,86 @@
+{
+    "bitcoin": {
+        "name": "bitcoin",
+        "chainId": "bitcoin",
+        "icon": "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
+        "providers": ["swapkit", "chainflip"]
+    },
+    "cosmos": {
+        "name": "cosmos",
+        "chainId": "cosmoshub-4",
+        "icon": "https://assets.coingecko.com/coins/images/1481/standard/cosmos_hub.png?1696502525",
+        "providers": ["swapkit"]
+    },
+    "bitcoin-cash": {
+        "name": "bitcoin cash",
+        "chainId": "bitcoincash",
+        "icon": "https://assets.coingecko.com/coins/images/780/standard/bitcoin-cash-circle.png?1696501932",
+        "providers": ["swapkit"]
+    },
+    "dash": {
+        "name": "dash",
+        "chainId": "dash",
+        "icon": "https://assets.coingecko.com/coins/images/19/standard/dash-logo.png?1696501423",
+        "providers": ["swapkit"]
+    },
+    "dogecoin": {
+        "name": "doge coin",
+        "chainId": "dogecoin",
+        "icon": "https://assets.coingecko.com/coins/images/5/standard/dogecoin.png?1696501409",
+        "providers": ["swapkit"]
+    },
+    "litecoin": {
+        "name": "litecoin",
+        "chainId": "litecoin",
+        "icon": "https://assets.coingecko.com/coins/images/2/standard/litecoin.png?1696501400",
+        "providers": ["swapkit"]
+    },
+    "polkadot": {
+        "name": "polkadot",
+        "chainId": "polkadot",
+        "icon": "https://static.coingecko.com/s/polkadot-73b0c058cae10a2f076a82dcade5cbe38601fad05d5e6211188f09eb96fa4617.gif",
+        "providers": ["swapkit", "chainflip"]
+    },
+    "arbitrum-one": { 
+        "name": "arbitrum", 
+        "chainId": "42161",
+        "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+        "type": "evm",
+        "providers": ["swapkit", "chainflip", "0x", "tokenbeam"]
+    },
+    "avalanche": {
+        "name": "avalanche",
+        "chainId": "43114",
+        "icon": "https://assets.coingecko.com/coins/images/12559/standard/Avalanche_Circle_RedWhite_Trans.png",
+        "type": "evm",
+        "providers": ["swapkit", "0x"]
+    },
+    "binance-smart-chain": {
+        "name": "binance smart chain",
+        "chainId": "56",
+        "icon": "https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png",
+        "type": "evm",
+        "providers": ["swapkit", "0x"]
+    },
+    "ethereum": {
+        "name": "ethereum",
+        "chainId": "1",
+        "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
+        "type": "evm",
+        "providers": ["swapkit", "chainflip", "0x"]
+    },
+    "ethereum-sepolia": {
+        "name": "ethereum-sepolia",
+        "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
+        "testnet": true,
+        "type": "evm",
+        "providers": ["chainflip", "0x"]
+    },
+    "arbitrum-sepolia": {
+        "name": "arbitrum-sepolia",
+        "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+        "testnet": true,
+        "type": "evm",
+        "providers": ["chainflip", "0x"]
+    }
+}

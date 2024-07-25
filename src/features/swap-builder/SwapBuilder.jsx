@@ -1,16 +1,16 @@
 import { Box, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import SwapWaypoint from "./SwapWaypoint";
-import { getNetworks } from "./api/networks";
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { getNetworks } from "./api/network/networks";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SwapExecutor from "./SwapExecutor";
 
 
 export default function SwapBuilder(){
-  const [ fromDetails, updateFromDetails] = useState({amount:0, token: null, network: null, completed: false });
-  const [ toDetails, updateToDetails] = useState({amount:0, token: null, network: null, completed: false });
+  const [ fromDetails, updateFromDetails] = useState({amount:0, token: null, network: null });
+  const [ toDetails, updateToDetails] = useState({amount:0, token: null, network: null });
   const networks = getNetworks();
+
   const dividerStyle = {
     bgcolor: 'white',
     borderRadius: '50%',
@@ -19,10 +19,6 @@ export default function SwapBuilder(){
     boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
     background: 'linear-gradient(to bottom, #ffffff, #ccc)',
   };
-
-  useEffect(() => {
-
-  }, [fromDetails, toDetails])
 
   return (
     <>
@@ -42,14 +38,16 @@ export default function SwapBuilder(){
                 boxShadow: '0 1px 2px hsla(210, 0%, 0%, 0.5), 0 2px 12px hsla(210, 100%, 25%, 0.3)'
                 })
             })} >
-            <SwapWaypoint label="from" networks={networks} details={fromDetails} update={updateFromDetails} />
+            <SwapWaypoint label="from" networks={networks} details={fromDetails} update={updateFromDetails} readonly={false} />
             <Divider sx={{ my: 2 }}>
               <Box sx={dividerStyle}>
                 <KeyboardArrowDownIcon color="primary" />
               </Box>
             </Divider>
-            <SwapWaypoint label="to" networks={networks} details={toDetails} update={updateToDetails} />
+            <SwapWaypoint label="to" networks={networks} details={toDetails} update={updateToDetails} readonly={true} />
         </Box>
+
+        <SwapExecutor from={fromDetails} to={toDetails} />
       </>
   )
 }

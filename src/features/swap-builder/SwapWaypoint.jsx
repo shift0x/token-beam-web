@@ -2,17 +2,20 @@ import { Avatar, Box, Button, Divider, Grid, Icon, Input, List, ListItem, ListIt
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-function SwapWaypoint({label, details, networks, update}){
+
+function SwapWaypoint({label, details, networks, update, readonly}){
     const [anchorEl, setAnchorEl] = useState(null)
 
     const [selectedNetworkIndex, setSelectedNetworkIndex] = useState(-1);
     const [selectedToken, setSelectedToken] = useState(null);
     const [selectedNetworkTokens, setNetworkTokens] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const [swapAmount, setSwapAmount] = useState(0);
+    const [isValidAmount,setIsValidAmount] = useState(true);
+    
 
     const selectedTokenId = selectedToken ? selectedToken.id : -1;
     const selectedNetwork = selectedNetworkIndex != -1 ? networks[selectedNetworkIndex] : null;
-
     const canSearch = selectedNetworkIndex != -1;
 
     useEffect(() => {
@@ -21,24 +24,24 @@ function SwapWaypoint({label, details, networks, update}){
 
             return;
         }
-
+       
         const searchValue = searchText.toLowerCase().trim();
         
         let allTokens =  networks[selectedNetworkIndex].tokens;
 
         let filteredTokens = allTokens
             .filter((token) => {
-                return searchText.trim().length == 0 || 
-                    token.name.toLowerCase().indexOf(searchValue) != -1 ||
-                    token.symbol.toLowerCase().indexOf(searchValue) != -1 ||
-                    token.address.toLowerCase().indexOf(searchValue) != -1
+                const isEmptySearch = searchText.trim().length == 0 
+                const isNameMatch = token.name && token.name.toLowerCase().indexOf(searchValue) != -1
+                const isSymbolMatch = token.symbol && token.symbol.toLowerCase().indexOf(searchValue) != -1
+                const isAddressMatch = token.address && token.address.toLowerCase().indexOf(searchValue) != -1
+
+                return isEmptySearch || isNameMatch || isSymbolMatch || isAddressMatch;
             });
 
 
         setNetworkTokens(filteredTokens.splice(0, 100));
-
     }, [selectedNetworkIndex, searchText])
-
 
 
     const handleClick = (event) => {
@@ -58,6 +61,24 @@ function SwapWaypoint({label, details, networks, update}){
     function handleTokenClicked(token) {
         setSelectedToken(token);
         setAnchorEl(null);
+
+        update({ network: selectedNetwork, token: token, amount: swapAmount});
+    }
+
+    function handleSwapAmountChanged(amount) {
+        const amountAsNumber = amount.replace(/,/g, '');
+
+
+        if(isNaN(amountAsNumber)){ 
+            setIsValidAmount(false);
+
+            return; 
+        }
+
+        setIsValidAmount(true);
+        setSwapAmount(amountAsNumber);
+
+        update({ network: selectedNetwork, token: selectedToken, amount: Number(amountAsNumber)});
     }
 
 
@@ -95,7 +116,7 @@ function SwapWaypoint({label, details, networks, update}){
                         { selectedTokenId == -1 ? <>Choose a token</>:
                             <>
                                 <Avatar src={selectedToken.image} sx={{width: "25px", height: "25px", padding: "2px"}} />
-                                <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol} </span>
+                                <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol ?? selectedToken.name} </span>
                                 
                             </>
                         }   
@@ -115,7 +136,7 @@ function SwapWaypoint({label, details, networks, update}){
                        >
                         <Box sx={{
                             backgroundColor: "#fff",
-                            minWidth: "400px",
+                            width: "350px",
                         }}>
                             <Stack sx={{ pt: 2}}> 
                                 <Box sx={{
@@ -128,6 +149,7 @@ function SwapWaypoint({label, details, networks, update}){
                                         <Box sx={{
                                                 padding: "5px",
                                                 ml: "5px",
+                                                marginTop: "10px",
                                                 display: "inline-flex",
                                                 border: "2px solid #eee",
                                                 borderRadius: "10px",
@@ -139,24 +161,34 @@ function SwapWaypoint({label, details, networks, update}){
                                         >
                                                 <img loading='lazy'  
                                                     src={network.icon} 
-                                                    height="20px"
-                                                    width="20px"
+                                                    height="30px"
+                                                    width="30px"
                                                     sx={{
                                                         padding: "5px",
                                                         marginLeft: "10px",
-                                                        border: "1px solid #000",
-                                                        
-                                                        
+                                                        border: "1px solid #000"
                                                     }}
                                                 />
                                         </Box>
                                     ))}
 
                                     { canSearch ?
-                                        <Input type="text" placeholder="search" value={searchText} sx={{ 
-                                            ml: "10px",
-                                            color: "#000",
-                                        }} onChange={ e => setSearchText(e.target.value)} /> : null
+                                        <>
+                                            <Box sx={{
+                                                marginTop: "10px",
+                                                textAlign: "center"
+                                            }}>
+                                                <Input type="text" placeholder="search" value={searchText} sx={{ 
+                                                    backgroundColor: "#e2f0fe",
+                                                    borderRadius: "5px",
+                                                    color: "#000",
+                                                    width: "80%",
+                                                    margin: "auto",
+                                                    padding: 1
+                                                }} onChange={ e => setSearchText(e.target.value)} />
+                                            </Box>
+                                        </>
+                                         : null
                                     }
                                     
                                 </Box>
@@ -202,7 +234,15 @@ function SwapWaypoint({label, details, networks, update}){
                     <Typography variant="caption" sx={{ color: 'darkgray'}}>amount</Typography>
                 </Box>
                 <Box sx={{ textAlign: 'right', mt: 2 }}>
-                    <Input value='0' sx={{ textAlign: "right"}} type='text'></Input>
+                        <Input
+                            type='text'
+                            readOnly={readonly}
+                            sx={{
+                                border: !isValidAmount ? "3px solid red" : "none",
+                                padding: "5px"
+                            }}
+                            onBlur={ e => handleSwapAmountChanged(e.target.value)} /> 
+                    
                 </Box>
             </Grid>
         </Grid>
@@ -213,7 +253,8 @@ SwapWaypoint.propTypes = {
     label: PropTypes.string.isRequired,
     details: PropTypes.PropTypes.object.isRequired,
     networks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    update: PropTypes.func.isRequired
+    update: PropTypes.func.isRequired,
+    readonly: PropTypes.bool.isRequired
 };
 
 export default SwapWaypoint;
