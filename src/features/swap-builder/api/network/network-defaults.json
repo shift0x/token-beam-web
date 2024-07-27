@@ -50,7 +50,7 @@
         }
     },
     "binance-smart-chain": {
-        "name": "binance smart chain",
+        "name": "binance",
         "chainId": "56",
         "icon": "https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png",
         "type": "evm",

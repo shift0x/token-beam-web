@@ -241,6 +241,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                 border: !isValidAmount ? "3px solid red" : "none",
                                 padding: "5px"
                             }}
+                            onSubmit={ e => handleSwapAmountChanged(e.target.value)}
                             onBlur={ e => handleSwapAmountChanged(e.target.value)} /> 
                     
                 </Box>

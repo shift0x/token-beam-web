@@ -6,12 +6,13 @@ import Grid from '@mui/material/Grid';
 import chainflip from '../assets/images/chainflip_logo.png'
 import zerox from '../assets/images/0x_logo.png'
 import thorchain from '../assets/images/thorchain_logo.png'
+import maya from '../assets/images/maya_logo.png'
 
-const logos = [ chainflip, thorchain, zerox ];
+const logos = [ chainflip, thorchain, maya ];
 
 const logoStyle = {
   "maxWidth": '500px',
-  "maxHeight": '50px',
+  "maxHeight": '40px',
   margin: '0 32px',
   opacity: 0.95,
 };

@@ -17,6 +17,7 @@ function makeToken(network, token){
         name: token.name,
         icon: token.image,
         address: token.address,
+        networkIcon: network.icon,
         external: {
             coingecko: {
                 id: token.id,
@@ -35,7 +36,7 @@ function makeNetwork(base){
     network.tokens = (network.tokens ?? []).map(token => {
         return makeToken(network, token);
     }).sort((x,y) => { 
-        return x.external.coingecko.marketCap > x.external.coingecko.marketCap ? 1 : -1;
+        return x.external.coingecko.marketCap < y.external.coingecko.marketCap ? 1 : -1;
     });
 
     
@@ -56,6 +57,7 @@ function makeNetworkNativeToken(network) {
         symbol: symbol,
         name: `${symbol} (Native)`,
         icon: network.native.icon,
+        networkIcon: network.icon,
         isNative: true,
         external: {}
     }

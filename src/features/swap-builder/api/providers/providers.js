@@ -13,9 +13,6 @@ const providers = [
 export function getProvidersForSwap(swap){
     return providers.filter(provider => {
         const canQuote = provider.canQuote(swap);
-        const kind = swap.segment
-
-        console.log({provider, canQuote, kind, swap})
 
         return canQuote
     })

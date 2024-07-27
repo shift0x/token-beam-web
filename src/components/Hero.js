@@ -1,16 +1,26 @@
-import * as React from 'react';
+import { useState}  from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import swap from '../assets/images/swap.png';
-import LogoCollection from './LogoCollection';
-import { Link } from "react-router-dom";
-import StyledBox from './StyledBox';
+import { Grid } from '@mui/material';
+import { getNetworks } from '../features/swap-builder/api/network/networks';
+import ReactRotatingText from 'react-rotating-text';
+import {highlightedText} from '../assets/styles/highlight-text'
 
+import './rotating-text.css'
 
 export default function Hero() {
+  const networks = getNetworks().filter(network => { return !network.testnet }).map(network => { return network.name});
+  const [showRotatingChains, setShowRotatingChains] = useState(true);
+ 
+  if(showRotatingChains){
+    setTimeout(() => {
+      setShowRotatingChains(false)
+    }, 1000 * 20)
+  }
+
+  
   return (
     <Box id="hero">
       <Container
@@ -18,14 +28,14 @@ export default function Hero() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          pt: { xs: 2, sm: 4 },
-          pb: { xs: 8, sm: 12 },
+          pt: { xs: 1, sm: 1 },
+          pb: { xs: 3, sm: 5 },
+          pl: 0,
+          pr: 0
         }}
       >
         <Stack
-          spacing={2}
-          useFlexGap
-          sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
+          sx={{ alignItems: 'center', width: { xs: '100%', sm: '100%' } }}
         >
           <Typography
             variant="h1"
@@ -33,47 +43,25 @@ export default function Hero() {
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
               alignItems: 'center',
-              fontSize: 'clamp(3rem, 10vw, 3.5rem)',
+              fontSize: '3.5rem',
+              fontFamily: "Poppins",
+              fontWeight: 600
             }}
           >
-            Any Token &nbsp;
-            <img
-              src={swap}
-              style={{ maxWidth: '40px'}}
-            /> &nbsp;
-
-            <Typography
-              component="span"
-              variant="h1"
-              sx={(theme) => ({
-                fontSize: 'inherit',
-                color: 'primary.main',
-                ...theme.applyStyles('dark', {
-                  color: 'primary.light',
-                }),
-              })}
-            >
-              Any Chain
-            </Typography>
+            Swap 
+            <span style={highlightedText}>&nbsp;Any Token&nbsp;</span> to 
+            <Grid>
+                <Box sx={{ 
+                  ml: "10px", 
+                  display: "inline-flex", 
+                  borderBottom: "5px solid #FFF", 
+                  fontSize: "2.95rem",
+                  width: showRotatingChains ? "300px" : "auto" }}>
+                    {showRotatingChains ? <ReactRotatingText items={networks} /> : "Any Chain"}
+                </Box>
+            </Grid>
           </Typography>
-          <Typography
-            sx={{
-              textAlign: 'center',
-              color: 'text.secondary',
-              width: { sm: '100%', md: '80%' },
-            }}
-          >
-            Remove complexity and break free from blockchain silos. Swap any token between chains in just a few clicks. 
-            Complex and slow just became fast and easy. Ready to earn? Join the affiliate program and earn .05% on each swap you refer.
-          </Typography>
-          <LogoCollection />
-          <Box display="flex" justifyContent="center" alignItems="center" gap={2} width="100%">
-            <Button variant="contained" sx={{ width: '30%' }} component={Link} to="/swap">Swap</Button>
-            <Button variant="contained" sx={{ width: '30%' }} component={Link} to="/affiliates">Become an Affiliate</Button>
-          </Box>
-          
         </Stack>
-        <StyledBox id="image" height="700px" />
       </Container>
     </Box>
   );

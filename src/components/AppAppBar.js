@@ -36,7 +36,6 @@ function AppAppBar() {
 
   return (
     <AppBar
-      position="fixed"
       sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 2 }}
     >
       <Container maxWidth="lg">
@@ -47,68 +46,16 @@ function AppAppBar() {
             alignItems: 'center',
             justifyContent: 'space-between',
             flexShrink: 0,
-            borderRadius: '999px',
-            backdropFilter: 'blur(24px)',
             maxHeight: 40,
-            border: '1px solid',
-            borderColor: 'divider',
-            bgcolor: 'hsla(220, 60%, 99%, 0.6)',
-            boxShadow:
-              '0 1px 2px hsla(210, 0%, 0%, 0.05), 0 2px 12px hsla(210, 100%, 80%, 0.5)',
-            ...theme.applyStyles('dark', {
-              bgcolor: 'hsla(220, 0%, 0%, 0.7)',
-              boxShadow:
-                '0 1px 2px hsla(210, 0%, 0%, 0.5), 0 2px 12px hsla(210, 100%, 25%, 0.3)',
-            }),
+            ml: -10,
+            mr: -10
+           
           })}
         >
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
             <Link to="/" style={{paddingTop: "5px"}}>
               <Sitemark />
             </Link>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scroll('howtoswap')}
-              >
-                How to Swap
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scroll('testimonials')}
-              >
-                Testimonials
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scroll('highlights')}
-              >
-                Highlights
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scroll('pricing')}
-              >
-                Pricing
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scroll('faq')}
-                sx={{ minWidth: 0 }}
-              >
-                FAQ
-              </Button>
-            </Box>
           </Box>
           <Box
             sx={{
@@ -117,17 +64,8 @@ function AppAppBar() {
               alignItems: 'center',
             }}
           >
-          { isHomePage ? (
-            <Container>
-              <Button color="primary" variant="text" size="small" component={Link} to="/affiliates">
-                Affiliates
-              </Button>
-              <Button color="primary" variant="contained" size="small" component={Link} to="/swap">
-                Swap
-              </Button>
-            </Container>
-          ) : <Web3WalletConnection active={true} /> }
-
+            <Web3WalletConnection active={true} />  
+        
 
             
           </Box>

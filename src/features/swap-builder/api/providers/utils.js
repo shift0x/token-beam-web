@@ -11,6 +11,7 @@ import { OneInchList,
     UniswapV3List,
     ChainflipList,
     MayaList } from "@swapkit/tokens";
+import {  getTokenDecimalsFromApi } from '../../utils/token';
 
 const allTokens = [
     ...OneInchList.tokens,
@@ -26,6 +27,14 @@ const allTokens = [
     ...MayaList.tokens
 ]
 
+async function getTokenDecimals(tokenToLookup){
+    const token = allTokens.find(t => { return t.identifier.toUpperCase() == tokenToLookup.id.toUpperCase() })
+
+    if(!token){ return getTokenDecimalsFromApi(tokenToLookup); }
+
+    return token.decimals;
+}
+
 export function canProviderSwapTokens(from, to, supportedTokens){
     const supportedFromToken = supportedTokens.find(token => { return token.identifier.toUpperCase() == from.toUpperCase()});
     const supportedToToken = supportedTokens.find(token => { return token.identifier.toUpperCase() == to.toUpperCase()});
@@ -33,18 +42,18 @@ export function canProviderSwapTokens(from, to, supportedTokens){
     return supportedFromToken != null && supportedToToken != null;
 }
 
-export function numberToBig(tokenId, amount) {
-    const token = allTokens.find(token => { return token.identifier.toUpperCase() == tokenId.toUpperCase() })
+export async function numberToBig(token, amount) {
+    const decimals = await getTokenDecimals(token)
+    
+    if(!decimals) { return null }
 
-    if(!token) { return null }
-
-    return utils.parseUnits(amount.toString(), token.decimals).toString();
+    return utils.parseUnits(amount.toString(), decimals).toString();
 }
 
-export function numberFromBig(tokenId, amount){
-    const token = allTokens.find(token => { return token.identifier.toUpperCase() == tokenId.toUpperCase() })
+export async function numberFromBig(token, amount){
+    const decimals = await getTokenDecimals(token)
+    
+    if(!decimals) { return null }
 
-    if(!token) { return null }
-
-    return Number(utils.formatUnits(amount.toString(), token.decimals));
+    return Number(utils.formatUnits(amount.toString(), decimals));
 }

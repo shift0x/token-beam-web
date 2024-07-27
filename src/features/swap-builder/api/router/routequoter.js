@@ -37,7 +37,5 @@ export async function getQuote(from, to, route){
     quote.amountIn = from.amount;
     quote.amountOut = isCompletedQuote ? route[route.length-1].quote.amountOut : 0;
 
-    console.log(quote);
-
-    return route
+    return quote
 }

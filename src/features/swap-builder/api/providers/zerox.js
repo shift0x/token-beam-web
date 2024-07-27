@@ -23,18 +23,14 @@ function canQuote(swap){
 
     const endpoint = endpoints[swap.from.chainId];
 
-    const chainId = swap.from.chainId;
-
     return endpoint != null;
 }
 
 async function quote(swap, amountIn){
-    return { amountOut: 0 }
-    
     const args = new URLSearchParams({
         sellToken: getTokenAddress(swap.from),
         buyToken: getTokenAddress(swap.to),
-        sellAmount: numberToBig(swap.from.id, amountIn)
+        sellAmount: await numberToBig(swap.from, amountIn)
     })
 
     const url = `${endpoints[swap.from.chainId]}/swap/v1/price?${args}`
@@ -50,14 +46,12 @@ async function quote(swap, amountIn){
 
         if(body.error != null){ throw body.error; }
     
-        result.amountOut = numberFromBig(swap.to.id, body.buyAmount)
+        result.amountOut = await numberFromBig(swap.to, body.buyAmount)
         result.route = body
         result.data = body
     } catch(err){
         result.error = err
     } finally {
-
-        console.log(result)
         return result
     }
 }

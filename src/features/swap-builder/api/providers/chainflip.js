@@ -16,7 +16,7 @@ async function quote(swap, amountIn){
         to: swap.to.id.split("-")[0],
         provider: "chainflip",
         network: "mainnet",
-        amount: numberToBig(swap.from.id, amountIn)
+        amount: await numberToBig(swap.from, amountIn)
     }
 
     if(params.amount == null){ return result; }
@@ -28,7 +28,7 @@ async function quote(swap, amountIn){
 
         if(body.error != null){ throw body.error; }
     
-        result.amountOut = numberFromBig(swap.to.id, body.data.amountOut)
+        result.amountOut = await numberFromBig(swap.to, body.data.amountOut)
         result.route = body.data
         result.data = body
     } catch(err){
