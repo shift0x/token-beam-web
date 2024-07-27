@@ -1,18 +1,21 @@
 import { ChainFlipProvider } from "./chainflip";
-import { SwapkitProvider } from "./swapkit";
-import { TokenBeamProvider } from "./tokenbeam";
+import { MayaProvider } from "./maya";
+import { ThorchainProvider } from "./thorswap";
 import { ZeroXProvider } from "./zerox";
 
 const providers = [
     ChainFlipProvider,
-    SwapkitProvider,
-    TokenBeamProvider,
+    ThorchainProvider,
+    MayaProvider,
     ZeroXProvider
 ]
 
 export function getProvidersForSwap(swap){
     return providers.filter(provider => {
         const canQuote = provider.canQuote(swap);
+        const kind = swap.segment
+
+        console.log({provider, canQuote, kind, swap})
 
         return canQuote
     })

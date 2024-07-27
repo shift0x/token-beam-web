@@ -115,7 +115,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
 
                         { selectedTokenId == -1 ? <>Choose a token</>:
                             <>
-                                <Avatar src={selectedToken.image} sx={{width: "25px", height: "25px", padding: "2px"}} />
+                                <Avatar src={selectedToken.icon} sx={{width: "25px", height: "25px", padding: "2px"}} />
                                 <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol ?? selectedToken.name} </span>
                                 
                             </>
@@ -213,7 +213,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
 
                                             onClick={ () => handleTokenClicked(token)}>
                                                 <ListItemAvatar>
-                                                    <Avatar src={token.image} sx={{width: "30px", height: "30px"}} />
+                                                    <Avatar src={token.icon} sx={{width: "30px", height: "30px"}} />
                                                 </ListItemAvatar>
                                                 <Typography sx={{ color: "#000"}}>
                                                     {token.name}

@@ -1,10 +1,7 @@
 
 import { ROUTE_SEGMENT } from "./routesegment";
 import { getNetworkNativeToken } from "../network/networks";
-import { getProvidersForSwap } from "./providers/providers";
-
-export const CROSS_NETWORK = "cross";
-
+import { getProvidersForSwap } from "../providers/providers";
 
 const baseNetwork = getNetworkNativeToken("1");
 
@@ -50,18 +47,17 @@ function makeRoutes(from, to) {
     }
 
     const routes = [];
-    
 
+    
     if(!from.token.isNative && !to.token.isNative && isCrossNetworkSwap) {
         routes.push([ { segment: ROUTE_SEGMENT.crosschainTokenToToken, from: from.token, to: to.token } ])
     } else if(from.token.isNative && !to.token.isNative && isCrossNetworkSwap){
         routes.push([ { segment: ROUTE_SEGMENT.crosschainNativeToToken, from: from.token, to: to.token } ])
     } else if(!from.token.isNative && to.token.isNative && isCrossNetworkSwap){
-        routes.push([ { segment: ROUTE_SEGMENT.crosschainNativeToToken, from: from.token, to: to.token } ])
+        routes.push([ { segment: ROUTE_SEGMENT.crosschainTokenToNative, from: from.token, to: to.token } ])
     } else if (!isCrossNetworkSwap){
         routes.push([ tokenToNative, nativeToToken].filter(swap => { return swap != null }));
     }
-    
 
     crossNetwork.forEach(path => {
         let route = [];
@@ -78,6 +74,8 @@ function makeRoutes(from, to) {
 
         routes.push(route);
     })
+
+    
 
     return routes;
 }

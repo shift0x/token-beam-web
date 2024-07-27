@@ -4,116 +4,94 @@ import bsc from '../../stores/tokens/binance-smart-chain.json'
 import eth from '../../stores/tokens/ethereum.json'
 import defaults from './network-defaults.json'
 
-import { 
-    OneInchList,
-    MayaList,
-    PancakeswapList,
-    PangolinList,
-    SushiswapList,
-    ThorchainList,
-    ChainflipList,
-} from "@swapkit/tokens";
-
 const networks = {};
-const swapkitTokenLookup = { gasTokens: {} };
 
-[
-    ...OneInchList.tokens,
-    ...MayaList.tokens,
-    ...PancakeswapList.tokens,
-    ...PangolinList.tokens,
-    ...SushiswapList.tokens,
-    ...ThorchainList.tokens,
-    ...ChainflipList.tokens
-].forEach(token => {
-    const id = makeTokenId(token.chainId, token.ticker);
+function makeToken(network, token){
+    const chain = network.native.id.split(".")[0]
+    const id = `${chain}.${token.symbol}-${token.address}`.toUpperCase()
 
-    swapkitTokenLookup[id] = token;
-
-    const isGasToken = token.identifier.indexOf(".") != -1 && !token.address;
-
-    if(isGasToken) {
-        swapkitTokenLookup.gasTokens[token.chainId] = token
+    return {
+        id: id,
+        chainId: network.chainId,
+        symbol: token.symbol.toUpperCase(),
+        name: token.name,
+        icon: token.image,
+        address: token.address,
+        external: {
+            coingecko: {
+                id: token.id,
+                marketCap: token.market_cap,
+                marketCapRank: token.market_cap_rank,
+                networkId: network.external.coingecko.networkId
+            }
+        },
     }
-
-});
-
-function makeTokenId(chainId, symbol) {
-    if(!chainId || !symbol) { return ""; }
-
-    return `${chainId.trim().toLowerCase()}::${symbol.trim().toLowerCase()}`
 }
 
 
 function makeNetwork(base){
     const network = { ...base, ...defaults[base.id]}
 
-    network.tokens = network.tokens ?? [];
+    network.tokens = (network.tokens ?? []).map(token => {
+        return makeToken(network, token);
+    }).sort((x,y) => { 
+        return x.external.coingecko.marketCap > x.external.coingecko.marketCap ? 1 : -1;
+    });
 
-    // hydrate metadata for matching tokens between coingecko lists and swapkit api
-    network.tokens.forEach(token => {
-        const id = makeTokenId(network.chainId, token.symbol);
-        const swapkitToken = swapkitTokenLookup[id];
-        const meta = {};
-
-        if(swapkitToken) {
-            meta.swapkit = { id: swapkitToken.identifier };
-            meta.decimals = swapkitToken.decimals;
-        }
-
-        token.meta = meta;
-        token.chainId = network.chainId
-    })
-
-    // resolve the network base token (gas token)
-    const nativeToken = getNetworkNativeToken(network.chainId);
-
-    network.tokens = [ nativeToken, ...network.tokens];
-    network.native = nativeToken;
+    
+    network.native = makeNetworkNativeToken(network);
+    network.tokens = [ network.native, ...network.tokens];
 
     networks[network.chainId] = network;
 
     return network;
 }
 
-export function networkSupportsProvider(chainId, provider){
-    const network = networks[chainId];
+function makeNetworkNativeToken(network) {
+    const symbol = network.native.id.split(".")[1].toUpperCase()
 
-    return network != null && network.providers.indexOf(provider) != -1;
+    return {
+        id: network.native.id,
+        chainId: network.chainId,
+        symbol: symbol,
+        name: `${symbol} (Native)`,
+        icon: network.native.icon,
+        isNative: true,
+        external: {}
+    }
+}
+
+function init(){
+    makeNetwork({id: "bitcoin"})
+    makeNetwork(eth)
+    makeNetwork(arb)
+    makeNetwork(avax)
+    makeNetwork(bsc)
 }
 
 export function getNetworks(){
-    return [
-        makeNetwork({id: "bitcoin"}),
-        makeNetwork(eth),
-        makeNetwork(arb),
-        makeNetwork(avax),
-        makeNetwork(bsc),
-        makeNetwork({id: "cosmos"}),
-        makeNetwork({id: "bitcoin-cash"}),
-        makeNetwork({id: "dash"}),
-        makeNetwork({id: "dogecoin"}),
-        makeNetwork({id: "litecoin"}),
-        makeNetwork({id: "polkadot"}),
-        
-    ]
+    return Object.keys(networks).map(id => { return networks[id]});
 }
 
-export function getNetworkNativeToken(chainId) {
-    const swapkitNetworkToken = swapkitTokenLookup.gasTokens[chainId]
+export function getNetworkNativeToken(chainId){
+    const network = networks[chainId];
 
-    const nativeToken = {
-        id: swapkitNetworkToken.identifier,
-        chainId: chainId,
-        image: swapkitNetworkToken.logoURI,
-        name: `${swapkitNetworkToken.ticker} (Native)`,
-        symbol: swapkitNetworkToken.identifier.split(".")[1],
-        meta: {
-            swapkit: { id: swapkitNetworkToken.identifier },
-            decimals: swapkitNetworkToken.decimals
-        },
-        isNative: true,
+    return network.native;
+}
+
+export function getTokenChain(token){
+    return token.id.split(".")[0]
+}
+
+export function getTokenAddress(token){
+    const nativeTokenAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
+    if(token.isNative){
+        return nativeTokenAddress
     }
 
-    return  nativeToken
+    return token.address;
 }
+
+init();
+
