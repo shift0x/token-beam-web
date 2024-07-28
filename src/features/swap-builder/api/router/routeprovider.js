@@ -5,6 +5,12 @@ import { getProvidersForSwap } from "../providers/providers";
 
 const baseNetwork = getNetworkNativeToken("1");
 
+function getSegmentId(route) {
+    const segments = route.map(r => { return r.segment })
+
+    return segments.join("::");
+}
+
 function makeRoutes(from, to) {
     const isCrossNetworkSwap = from.network.chainId != to.network.chainId
 
@@ -75,9 +81,15 @@ function makeRoutes(from, to) {
         routes.push(route);
     })
 
-    
+    const routesBySegment = {}
 
-    return routes;
+    routes.forEach(route => {
+        const id = getSegmentId(route);
+
+        routesBySegment[id] = route
+    })
+
+    return Object.keys(routesBySegment).map(segment => { return routesBySegment[segment]});
 }
 
 function filterQuoteableRoutes(routes) {

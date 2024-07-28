@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Avatar, AvatarGroup, Grid } from '@mui/material';
 import { getNetworks } from '../features/swap-builder/api/network/networks';
 import ReactRotatingText from 'react-rotating-text';
 import {highlightedText} from '../assets/styles/highlight-text'
@@ -11,8 +11,16 @@ import {highlightedText} from '../assets/styles/highlight-text'
 import './rotating-text.css'
 
 export default function Hero() {
-  const networks = getNetworks().filter(network => { return !network.testnet }).map(network => { return network.name});
+  const networks = getNetworks().filter(network => { return !network.testnet });
+  const networkNames = networks.map(network => { return network.name});
   const [showRotatingChains, setShowRotatingChains] = useState(true);
+
+  const networkAvatarStyle = {
+      backgroundColor: "#fff",
+      padding: "1px",
+      height: "35px",
+      width: "35px"
+  }
  
   if(showRotatingChains){
     setTimeout(() => {
@@ -54,10 +62,23 @@ export default function Hero() {
                 <Box sx={{ 
                   ml: "10px", 
                   display: "inline-flex", 
-                  borderBottom: "5px solid #FFF", 
+                  borderBottom: showRotatingChains ? "5px solid #FFF" : "none", 
                   fontSize: "2.95rem",
                   width: showRotatingChains ? "300px" : "auto" }}>
-                    {showRotatingChains ? <ReactRotatingText items={networks} /> : "Any Chain"}
+                    {showRotatingChains ? 
+                        <ReactRotatingText items={networkNames} /> : 
+                        <AvatarGroup>
+                            { 
+                              networks.map(network => (
+                                <>
+                                  <Avatar src={network.icon} sx={networkAvatarStyle} />
+                                </>
+                                
+                              ))
+                            }
+                            
+                        </AvatarGroup>
+                      }
                 </Box>
             </Grid>
           </Typography>

@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Divider, Grid, Typography } from "@mui/material";
+import { Avatar, AvatarGroup, Box, Button, CircularProgress, Divider, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import SwapWaypoint from "./SwapWaypoint";
 import { getNetworks } from "./api/network/networks";
@@ -36,7 +36,36 @@ const boxHeadingStyle = {
   textAlign: "center",
   fontSize: ".85rem",
   textTransform: "uppercase",
-  fontWeight: "bold"
+  fontWeight: "bold",
+}
+
+const boxHeadingTextStyle = {
+  color: "#ccc",
+  fontSize: "1rem"
+}
+
+const tokenAvatarStyle = {
+  backgroundColor: "#fff",
+  padding: "1px",
+  height: "20px",
+  width: "20px"
+}
+
+function createModel(route) {
+  const model = {
+    amountIn: route.amountIn,
+    amountOut: route.amountOut,
+    route: route,
+    tokens: []
+  }
+
+  route.route.forEach((swap, index) => {
+    if(index == 0){ model.tokens.push(swap.from) }
+
+    model.tokens.push(swap.to);
+  })
+
+  return model;
 }
 
 export default function SwapBuilder(){
@@ -46,8 +75,10 @@ export default function SwapBuilder(){
   const [ selectedRoute, setSelectedRoute] = useState(null);
   const [ isBuildingRoutes, setIsBuildingRoutes] = useState(false);
   const [ quoteErrorMessage, setQuoteErrorMessage] = useState(null);
+  const [ model, setModel] = useState([])
 
   const networks = getNetworks();
+  
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,8 +90,11 @@ export default function SwapBuilder(){
 
       setSelectedRoute(optimalRoute);
       setQuoteErrorMessage(errorMessage);
-    }, 1000 * 2)  
+      setModel(allSwapRoutes.map(route => { return createModel(route)}));
+    }, 1000)  
   }, [allSwapRoutes]);
+
+  console.log(model);
   
 
   return (
@@ -71,7 +105,7 @@ export default function SwapBuilder(){
               sx={boxContentsStyle}
               style={{minHeight:"483px"}} >
               <Typography variant="h4" sx={boxHeadingStyle}>
-                Swap
+                <span style={boxHeadingTextStyle}> Swap </span>
               </Typography>
               <SwapWaypoint label="from" networks={networks} details={fromDetails} update={updateFromDetails} readonly={false} />
               <Divider sx={{ my: 2 }}>
@@ -111,8 +145,39 @@ export default function SwapBuilder(){
             margin: { xs: .1, sm: .2},
           }}>
             <Typography variant="h4" sx={boxHeadingStyle}>
-                  Route
+                  <span style={boxHeadingTextStyle}>Route</span>
             </Typography>
+
+            <Box display="flex" flexDirection="column" alignItems="center" sx={{margin: 3, marginLeft: 1}}>
+              <Grid container spacing={2} justifyContent="center">
+                { model.map(route => (
+                  <Box alignItems="center" justifyContent="center" sx={{
+                    display: "flex",
+                    marginLeft: 2,
+                    cursor: "pointer",
+                    borderBottom: "2px solid #ccc",
+                    backgroundColor: selectedRoute.id == route.route.id ? "#faf9e1" : "unset",
+                    padding: "5px 15px",
+                    borderRadius: selectedRoute.id == route.route.id ? "10px" : "unset",
+                    color: selectedRoute.id == route.route.id ? "#000" : "unset"
+                  }} onClick={ () => { setSelectedRoute(route.route) }}>
+                        <AvatarGroup>
+                            { route.tokens.map(token => (
+                                <Avatar src={token.icon} sx={tokenAvatarStyle} />
+                            ))}
+                        </AvatarGroup>
+
+                        <Typography variant="body1" sx={{ marginLeft: "5px"}}>
+                            {
+                                route.amountOut > 1 ? 
+                                  route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
+                                  route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})
+                            }
+                        </Typography>
+                  </Box>
+                ))}
+              </Grid>
+            </Box>
 
             <SwapsVisualizer swap={selectedRoute} />
           </Box>

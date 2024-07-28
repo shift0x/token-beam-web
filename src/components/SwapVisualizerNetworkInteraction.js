@@ -17,7 +17,7 @@ const swapBoxStyle = {
     marginLeft: "10px",
     borderRadius: "15px",
     marginTop: "-4px",
-    padding: "10px",
+    padding: "5px 15px",
     backgroundColor: "#fcfcfc",
     
 }
@@ -49,7 +49,11 @@ function SwapVisualizerNetworkInteraction({network, displaySwapOutputs}){
                             <Typography limit sx={{
                                 ml: "5px",
                             }}>
-                                {lastswap.quote.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})}
+                                {
+                                    lastswap.quote.amountOut > 1 ? 
+                                        lastswap.quote.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
+                                        lastswap.quote.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})
+                                }
                             </Typography>
                     </Box>
                     <Box sx={{
