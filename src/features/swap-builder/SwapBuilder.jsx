@@ -155,11 +155,9 @@ export default function SwapBuilder(){
                     display: "flex",
                     marginLeft: 2,
                     cursor: "pointer",
-                    borderBottom: "2px solid #ccc",
-                    backgroundColor: selectedRoute.id == route.route.id ? "#faf9e1" : "unset",
+                    backgroundColor: selectedRoute.id == route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
                     padding: "5px 15px",
-                    borderRadius: selectedRoute.id == route.route.id ? "10px" : "unset",
-                    color: selectedRoute.id == route.route.id ? "#000" : "unset"
+                    color: selectedRoute.id == route.route.id ? "#fff" : "unset"
                   }} onClick={ () => { setSelectedRoute(route.route) }}>
                         <AvatarGroup>
                             { route.tokens.map(token => (

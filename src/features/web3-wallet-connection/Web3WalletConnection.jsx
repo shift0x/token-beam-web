@@ -20,8 +20,8 @@ function Web3WalletConnection({active}){
         fontSize: "0.8125rem",
         lineHeight: 1.75,
         textTransform: "capitalize",
-        padding: "4px 10px",
-        borderRadius: "12px",
+        padding: "7px 10px",
+        borderRadius: "15px",
         color: "hsl(210, 100%, 97%)",
         backgroundColor: "hsl(210, 98%, 48%)",
         backgroundImage: "linear-gradient(to bottom, hsla(210, 98%, 48%, 0.8), hsl(210, 98%, 42%))"

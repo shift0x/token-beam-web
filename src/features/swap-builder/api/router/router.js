@@ -7,9 +7,10 @@ export async function getQuotes(from, to){
         return getQuote(index, from, to, route)
     }));
 
-    console.log({quotes})
 
-    return quotes.sort((x,y)  => {
-        return x.amountOut < y.amountOut ? 1 : -1;
-    })
+    return quotes
+        .filter(quote => { return quote.amountOut > 0})
+        .sort((x,y)  => {
+            return x.amountOut < y.amountOut ? 1 : -1;
+        })
 }
