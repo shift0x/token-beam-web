@@ -11,7 +11,7 @@ import { OneInchList,
     UniswapV3List,
     ChainflipList,
     MayaList } from "@swapkit/tokens";
-import {  getTokenDecimalsFromApi } from '../../utils/token';
+import {  getTokenDecimalsFromChain } from '../../utils/token';
 
 const allTokens = [
     ...OneInchList.tokens,
@@ -30,7 +30,7 @@ const allTokens = [
 async function getTokenDecimals(tokenToLookup){
     const token = allTokens.find(t => { return t.identifier.toUpperCase() == tokenToLookup.id.toUpperCase() })
 
-    if(!token){ return getTokenDecimalsFromApi(tokenToLookup); }
+    if(!token){ return getTokenDecimalsFromChain(tokenToLookup); }
 
     return token.decimals;
 }

@@ -6,6 +6,8 @@ export default function NetworkSelector(){
 
     const [ selectedNework, setSelectedNetwork ] = useState("mainnet")
 
+    
+
     return (
         <Box sx={{
             textAlign: 'center',

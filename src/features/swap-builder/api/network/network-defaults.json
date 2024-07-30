@@ -84,8 +84,8 @@
         }
     },
     "ethereum-sepolia": {
-        "name": "ethereum-sepolia",
-        "chainId": "ethereum-sepolia",
+        "name": "sepolia",
+        "chainId": "11155111",
         "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
         "testnet": true,
         "type": "evm",
@@ -102,8 +102,8 @@
         }
     },
     "arbitrum-sepolia": {
-        "name": "arbitrum-sepolia",
-        "chainId": "arbitrum-sepolia",
+        "name": "arbitrum sepolia",
+        "chainId": "421614",
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
         "testnet": true,
         "type": "evm",

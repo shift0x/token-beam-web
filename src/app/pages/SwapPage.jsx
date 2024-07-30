@@ -84,7 +84,6 @@ export default function SwapPage() {
             </Typography>
           </div>
           <Grid container item sx={{ gap: 1, display: { xs: 'auto', sm: 'none' } }}>
-            
             {items.map(({ title }, index) => (
               <Chip
                 label="{title}"

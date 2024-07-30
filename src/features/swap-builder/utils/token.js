@@ -1,3 +1,8 @@
+import { getERC20TokenDecimals } from "../../../lib/erc20/erc20";
+
+export async function getTokenDecimalsFromChain(token) {
+    return getERC20TokenDecimals(token.chainId, token.address);
+}
 
 export async function getTokenDecimalsFromApi(token){
     const network = token.external.coingecko.networkId;
