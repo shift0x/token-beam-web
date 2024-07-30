@@ -9,6 +9,6 @@ export async function getERC20TokenDecimals(chainId, address){
     return result[0];
 }
 
-export async function transferERC20Token(token, to, amountBig){
-    return makeCalldata(erc20, token, to, amountBig);
+export async function transferERC20Token(to, amountBig){
+    return makeCalldata(erc20, "transfer", to, amountBig);
 }

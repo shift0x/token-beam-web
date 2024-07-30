@@ -1,4 +1,5 @@
 import { sendTransaction } from "../../../../lib/chain/transaction";
+import { transferERC20Token } from "../../../../lib/erc20/erc20";
 import { canProviderSwapTokens, numberFromBig, numberToBig } from "./utils";
 import { ChainflipList } from "@swapkit/tokens";
 
@@ -8,8 +9,8 @@ const quoteApiBaseUrl = "https://token-beam-api.vercel.app/api"
 
 const providerId = "chainflip"
 
-function canQuote(swap){
-    return canProviderSwapTokens(swap.from.id, swap.to.id, ChainflipList.tokens)
+function canQuote(swap, network){
+    return network == "testnet" || canProviderSwapTokens(swap.from.id, swap.to.id, ChainflipList.tokens)
 }
 
 async function createBaseQuoteParams(swap, amountIn, method, network){
@@ -41,6 +42,7 @@ async function quote(swap, amountIn, network){
         result.route = body.data
         result.data = body
     } catch(err){
+        console.log(err);
         result.error = err
     } finally {
         return result
@@ -55,12 +57,15 @@ async function getSummary(operation, prev, next) {
 }
 
 async function execute(signer, operation, prev, next){
-    const to = operation.metadata.depositAddress;
-    const value = operation.metadata.amount;
+    const depositAddress = operation.metadata.depositAddress
+    const amount = operation.metadata.amount;
+    const from = operation.swap.from;
 
-    await sendTransaction(signer, to, null, value);
-
-    console.log(operation.metadata);
+    const to = from.isNative ? depositAddress : from.address;
+    const calldata = from.isNative ? null : await transferERC20Token(depositAddress, amount);
+    const value = from.isNative ? amount : null;
+    
+    await sendTransaction(signer, to, calldata, value);
 }
 
 
@@ -84,6 +89,7 @@ async function createOperation(swap, prev, next, to, amountIn, network){
         if(body.error != null){ throw body.error; }
     
         operation.metadata = body.data;
+        operation.swap = swap;
         operation.getDestinationAddress = () => { return  operation.metadata.destAddress;  }
         operation.getSummary = (prevOp, nextOp) => { return getSummary(operation, prevOp, nextOp); }
         operation.execute = (signer, prevOp, nextOp) => { return execute(signer, operation, prevOp, nextOp); }

@@ -10,9 +10,9 @@ const providers = [
     ZeroXProvider
 ]
 
-export function getProvidersForSwap(swap){
+export function getProvidersForSwap(swap, network){
     return providers.filter(provider => {
-        const canQuote = provider.canQuote(swap);
+        const canQuote = provider.canQuote(swap, network);
 
         return canQuote
     })

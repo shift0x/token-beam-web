@@ -2,7 +2,7 @@ import { getRoutes } from "./routeprovider";
 import { getQuote } from "./routequoter";
 
 export async function getQuotes(from, to, network){
-    const routes = getRoutes(from, to)
+    const routes = getRoutes(from, to, network)
     const quotes = await Promise.all(routes.map((route, index) => {
         return getQuote(index, from, to, route, network)
     }));

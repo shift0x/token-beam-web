@@ -92,14 +92,14 @@ function makeRoutes(from, to) {
     return Object.keys(routesBySegment).map(segment => { return routesBySegment[segment]});
 }
 
-function filterQuoteableRoutes(routes) {
+function filterQuoteableRoutes(routes, network) {
     const quotables = [];
 
     routes.forEach(route => {
         let canQuote = true;
 
         route.forEach(swap => {
-            swap.providers = getProvidersForSwap(swap);
+            swap.providers = getProvidersForSwap(swap, network);
 
             if(swap.providers.length == 0) {
                 canQuote = false;
@@ -114,9 +114,9 @@ function filterQuoteableRoutes(routes) {
     return quotables;
 }
 
-export function getRoutes(from, to){
+export function getRoutes(from, to, network){
     const routes = makeRoutes(from, to);
-    const quoteableRoutes = filterQuoteableRoutes(routes);
+    const quoteableRoutes = filterQuoteableRoutes(routes, network);
 
     return quoteableRoutes
 }

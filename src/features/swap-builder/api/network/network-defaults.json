@@ -95,6 +95,15 @@
         "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
         "type": "evm",
         "providers": ["chainflip", "0x"],
+        "tokens": [
+            {
+                "id": "usd-coin",
+                "symbol": "usdc",
+                "name": "USDC",
+                "image": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+                "address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"
+            }
+        ],
         "external": {
             "coingecko": {
                 "networkId": "sepolia-testnet"
