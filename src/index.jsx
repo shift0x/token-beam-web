@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './app/App'
 
-import SwapPageV2 from './app/pages/SwapPageV2';
-import HomePage from './app/pages/HomePage';
+import SwapPage from '././app/pages/SwapPage'
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 
@@ -17,12 +16,8 @@ const router = createBrowserRouter([
     children: [
       {
         path:"/",
-        element: <HomePage />
+        element: <SwapPage />
       },
-      {
-        path: "/swap",
-        element: <SwapPageV2 />
-      }
     ]
   },
   
