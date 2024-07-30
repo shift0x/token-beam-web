@@ -1,6 +1,6 @@
 
 
-export async function getQuote(id, from, to, route){
+export async function getQuote(id, from, to, route, network){
     var amountOut = from.amount;
 
     for(var i =0; i < route.length;i++){
@@ -12,7 +12,7 @@ export async function getQuote(id, from, to, route){
         }
 
         const swapQuotes = await Promise.all(swap.providers.map(async provider => { 
-            return provider.quote(swap, swap.quote.amountIn ); 
+            return provider.quote(swap, swap.quote.amountIn, network ); 
         }));
 
         const sortedSwapQuotes = swapQuotes.sort((x,y) => { 

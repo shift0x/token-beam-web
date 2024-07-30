@@ -69,10 +69,15 @@ function init(){
     makeNetwork(arb)
     makeNetwork(avax)
     makeNetwork(bsc)
+    makeNetwork({id: "ethereum-sepolia"})
+    makeNetwork({id: "arbitrum-sepolia"})
 }
 
-export function getNetworks(){
-    return Object.keys(networks).map(id => { return networks[id]});
+export function getNetworks(type){
+    return Object
+        .keys(networks)
+        .map(id => { return networks[id]})
+        .filter(network => { return network.network == type});
 }
 
 export function getNetworkNativeToken(chainId){

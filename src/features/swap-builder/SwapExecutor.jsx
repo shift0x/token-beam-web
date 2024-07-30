@@ -4,7 +4,7 @@ import { getQuotes } from './api/router/router';
 
 
 
-function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes}){
+function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes, network}){
     useEffect(() => {
 
         const handler = async () => {
@@ -15,7 +15,7 @@ function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes}){
 
             setIsBuildingRoutes(true);
 
-            const quotes = await getQuotes(from, to);
+            const quotes = await getQuotes(from, to, network);
 
             setSwapRoutes(quotes);
         }
@@ -31,6 +31,7 @@ SwapExecutor.propTypes = {
     from: PropTypes.object.isRequired,
     to: PropTypes.object.isRequired,
     setSwapRoutes: PropTypes.func.isReqired,
+    network: PropTypes.string.isRequired,
     setIsBuildingRoutes: PropTypes.func.isRequired,
 };
 

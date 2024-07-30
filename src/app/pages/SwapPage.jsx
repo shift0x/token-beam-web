@@ -7,17 +7,25 @@ import Hero from '../../components/Hero';
 import LogoCollection from '../../components/LogoCollection';
 import { Box } from '@mui/material';
 import NetworkSelector from '../../components/NetworkSelector';
+import { useState } from 'react';
+
 
 
 export default function SwapPage() {
 
+  const [network, setNetwork] = useState("mainnet")
+
+  function onNetworkChanged(value){
+    setNetwork(value)
+  }
+
   return (
     <Container sx={{ pt: { xs: 2, sm: 4 }, }}>
         <Hero />
-        <NetworkSelector />
+        <NetworkSelector network={network} onNetworkChanged={onNetworkChanged} />
         <Grid container spacing={2}>
             <StyledBox>
-                <SwapBuilder />
+                <SwapBuilder network={network} />
             </StyledBox>
         </Grid>
         <Box sx={{ width: "90%", pt: 5, margin: "auto"}}>

@@ -1,13 +1,8 @@
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
+import PropTypes from 'prop-types';
 
 
-export default function NetworkSelector(){
-
-    const [ selectedNework, setSelectedNetwork ] = useState("mainnet")
-
-    
-
+function NetworkSelector({network, onNetworkChanged}){
     return (
         <Box sx={{
             textAlign: 'center',
@@ -21,9 +16,9 @@ export default function NetworkSelector(){
         }} >
             <ToggleButtonGroup
                 color="primary"
-                value={selectedNework}
+                value={network}
                 exclusive
-                onChange={ (event, value) => { setSelectedNetwork(value)}}
+                onChange={ (event, value) => { onNetworkChanged(value)}}
                 aria-label="Platform"
             >
                 <ToggleButton value="mainnet">Mainnet</ToggleButton>
@@ -33,3 +28,10 @@ export default function NetworkSelector(){
         
     )
 }
+
+NetworkSelector.propTypes = {
+    network: PropTypes.string.isRequired,
+    onNetworkChanged: PropTypes.func.isRequired,
+};
+
+export default NetworkSelector

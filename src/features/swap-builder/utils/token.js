@@ -20,3 +20,4 @@ export async function getTokenDecimalsFromApi(token){
         return null;
     }
 }
+

@@ -6,7 +6,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SwapExecutor from "./SwapExecutor";
 import SwapsVisualizer from "../../components/SwapVisualizer";
 import { getExecutionOperations } from "./api/router/router";
-import { useAddress } from "@thirdweb-dev/react";
+import { useAddress, useChainId, useSwitchChain, useConnect, metamaskWallet, useSigner } from "@thirdweb-dev/react";
+import PropTypes from 'prop-types';
 
 const dividerStyle = {
   bgcolor: 'white',
@@ -70,7 +71,9 @@ function createModel(route) {
   return model;
 }
 
-export default function SwapBuilder(){
+
+
+function SwapBuilder({network}){
   const [ fromDetails, updateFromDetails] = useState({amount:0, token: null, network: null });
   const [ toDetails, updateToDetails] = useState({amount:0, token: null, network: null });
   const [ allSwapRoutes, setSwapRoutes] = useState([]);
@@ -78,10 +81,17 @@ export default function SwapBuilder(){
   const [ isBuildingRoutes, setIsBuildingRoutes] = useState(false);
   const [ quoteErrorMessage, setQuoteErrorMessage] = useState(null);
   const [ model, setModel] = useState([])
-  const address = useAddress();
+
+  const connectedAddress = useAddress();
+  const connectedChainId = useChainId();
+  const switchChain = useSwitchChain();
+  const connectWallet = useConnect();
+  const signer = useSigner();
+
+  const metamaskConfig = metamaskWallet();
+
   
-  const networks = getNetworks();
-  
+  const networks = getNetworks(network);
 
   useEffect(() => {
     setTimeout(() => {
@@ -97,14 +107,28 @@ export default function SwapBuilder(){
     }, 1000)  
   }, [allSwapRoutes]);
 
+  async function ensureUserIsConnectedToCorrectChain(chainId){
+    await connectWallet(metamaskConfig);
+    await switchChain(chainId);
+  }
+
   async function swap(){
     const trade = selectedRoute;
+    const chainId = Number(trade.route[0].from.chainId)
 
-    console.log({address})
+    await ensureUserIsConnectedToCorrectChain(chainId);
 
-    trade.operation = await getExecutionOperations(selectedRoute.route, address);
+    console.log({connectedAddress, connectedChainId, trade})
 
-    console.log(trade.operation);
+    trade.operation = await getExecutionOperations(selectedRoute.route, connectedAddress, network);
+
+    for(var i =0; i < trade.operation.length; i++){
+      const prev = i == 0 ? null : trade.operation[i-1];
+      const next = i == trade.operation.length-1 ? null : trade.operation[i+1];
+      const op = trade.operation[i];
+
+      await op.execute(signer, prev, next);
+    }
   }
   
 
@@ -196,8 +220,15 @@ export default function SwapBuilder(){
         <SwapExecutor 
           from={fromDetails} 
           to={toDetails} 
+          network={network}
           setSwapRoutes={setSwapRoutes} 
           setIsBuildingRoutes={setIsBuildingRoutes}  />
       </>
   )
 }
+
+SwapBuilder.propTypes = {
+  network: PropTypes.string.isRequired,
+};
+
+export default SwapBuilder

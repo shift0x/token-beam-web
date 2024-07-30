@@ -11,7 +11,7 @@ import {highlightedText} from '../assets/styles/highlight-text'
 import './rotating-text.css'
 
 export default function Hero() {
-  const networks = getNetworks().filter(network => { return !network.testnet });
+  const networks = getNetworks("mainnet");
   const networkNames = networks.map(network => { return network.name});
   const [showRotatingChains, setShowRotatingChains] = useState(true);
 

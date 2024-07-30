@@ -9,7 +9,10 @@ function canQuote(swap){
     return canProviderSwapTokens(swap.from.id, swap.to.id, MayaList.tokens)
 }
 
-async function quote(swap, amountIn){
+async function quote(swap, amountIn, network){
+    if(network != "mainnet")
+        return { amountOut: 0, error: `network (${network}) not supported` }
+    
     const params = {
         sellAsset: swap.from.id,
         buyAsset: swap.to.id,

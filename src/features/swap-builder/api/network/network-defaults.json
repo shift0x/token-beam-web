@@ -1,6 +1,7 @@
 {
     "bitcoin": {
         "name": "bitcoin",
+        "network": "mainnet",
         "chainId": "bitcoin",
         "icon": "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
         "providers": ["thorchain", "chainflip", "maya"],
@@ -17,6 +18,7 @@
     },
     "arbitrum-one": { 
         "name": "arbitrum", 
+        "network": "mainnet",
         "chainId": "42161",
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
         "type": "evm",
@@ -34,6 +36,7 @@
     },
     "avalanche": {
         "name": "avalanche",
+        "network": "mainnet",
         "chainId": "43114",
         "icon": "https://assets.coingecko.com/coins/images/12559/standard/Avalanche_Circle_RedWhite_Trans.png",
         "type": "evm",
@@ -51,6 +54,7 @@
     },
     "binance-smart-chain": {
         "name": "binance",
+        "network": "mainnet",
         "chainId": "56",
         "icon": "https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png",
         "type": "evm",
@@ -68,6 +72,7 @@
     },
     "ethereum": {
         "name": "ethereum",
+        "network": "mainnet",
         "chainId": "1",
         "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
         "type": "evm",
@@ -85,9 +90,9 @@
     },
     "ethereum-sepolia": {
         "name": "sepolia",
+        "network": "testnet",
         "chainId": "11155111",
         "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
-        "testnet": true,
         "type": "evm",
         "providers": ["chainflip", "0x"],
         "external": {
@@ -103,9 +108,9 @@
     },
     "arbitrum-sepolia": {
         "name": "arbitrum sepolia",
+        "network": "testnet",
         "chainId": "421614",
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
-        "testnet": true,
         "type": "evm",
         "providers": ["chainflip"],
         "external": {
