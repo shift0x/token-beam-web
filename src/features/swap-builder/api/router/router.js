@@ -14,3 +14,17 @@ export async function getQuotes(from, to){
             return x.amountOut < y.amountOut ? 1 : -1;
         })
 }
+
+export async function getExecutionOperations(route, to){
+    const operations = await Promise.all(route.map((swap,index) => {
+        const provider = swap.quote.execution.provider;
+        const prev = index == 0 ? null : route[index-1];
+        const next = index == route.length - 1 ? null : route[index+1];
+
+        return provider.createOperation(swap, prev, next, to, swap.quote.amountIn);
+    }));
+
+    console.log(operations);
+
+    return operations;
+}

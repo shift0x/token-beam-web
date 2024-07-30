@@ -60,8 +60,15 @@ async function quote(swap, amountIn){
     }
 }
 
+async function createOperation(swap, prev, next, to){
+    // throchain needs a deposit address
+
+    return null;
+}
+
 export const ThorchainProvider = {
     canQuote,
     quote,
     providerId,
+    createOperation,
 }

@@ -5,6 +5,8 @@ import { getNetworks } from "./api/network/networks";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SwapExecutor from "./SwapExecutor";
 import SwapsVisualizer from "../../components/SwapVisualizer";
+import { getExecutionOperations } from "./api/router/router";
+import { useAddress } from "@thirdweb-dev/react";
 
 const dividerStyle = {
   bgcolor: 'white',
@@ -76,7 +78,8 @@ export default function SwapBuilder(){
   const [ isBuildingRoutes, setIsBuildingRoutes] = useState(false);
   const [ quoteErrorMessage, setQuoteErrorMessage] = useState(null);
   const [ model, setModel] = useState([])
-
+  const address = useAddress();
+  
   const networks = getNetworks();
   
 
@@ -94,7 +97,15 @@ export default function SwapBuilder(){
     }, 1000)  
   }, [allSwapRoutes]);
 
-  console.log(model);
+  async function swap(){
+    const trade = selectedRoute;
+
+    console.log({address})
+
+    trade.operation = await getExecutionOperations(selectedRoute.route, address);
+
+    console.log(trade.operation);
+  }
   
 
   return (
@@ -125,7 +136,7 @@ export default function SwapBuilder(){
                     borderRadius: "24px",
                     padding: 2.5,
                     fontSize: "1rem"
-                }}>
+                }} onClick={ swap }>
                     { !isBuildingRoutes ? 
                       <>
                          Swap

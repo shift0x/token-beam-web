@@ -44,8 +44,14 @@ async function quote(swap, amountIn){
     }
 }
 
+async function createOperation(swap, prev, next, to){
+    // maya needs a deposit address
+    return null;
+}
+
 export const MayaProvider = {
     canQuote,
     quote,
-    providerId
+    providerId,
+    createOperation
 }

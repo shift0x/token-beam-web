@@ -34,8 +34,6 @@ function makeUIModelFromSwap(swap){
             const first = chainInterations.items[0];
             const last = chainInterations.items[chainInterations.items.length-1];
 
-            console.log({first, last})
-
             model.push({...chainInterations, amountIn: first.quote.amountIn, amountOut: last.quote.amountOut, tokenIn: first.from, tokenOut: last.to });
 
             chainlist[chainId].addedToModel = true

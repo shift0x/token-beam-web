@@ -14,7 +14,7 @@ function App() {
       <Container>
         <CssBaseline />
         <AppAppBar />
-        <Container sx={{ pt: { xs: 7, sm: 14 }, }}>
+        <Container sx={{ pt: 10}}>
           <Outlet />
         </Container>
       </Container>

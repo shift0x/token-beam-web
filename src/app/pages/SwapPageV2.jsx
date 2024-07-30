@@ -6,6 +6,7 @@ import SwapBuilder from '../../features/swap-builder/SwapBuilder';
 import Hero from '../../components/Hero';
 import LogoCollection from '../../components/LogoCollection';
 import { Box } from '@mui/material';
+import NetworkSelector from '../../components/NetworkSelector';
 
 
 export default function SwapPageV2() {
@@ -13,12 +14,13 @@ export default function SwapPageV2() {
   return (
     <Container sx={{ pt: { xs: 2, sm: 4 }, }}>
         <Hero />
-        <Grid container spacing={6}>
+        <NetworkSelector />
+        <Grid container spacing={2}>
             <StyledBox>
                 <SwapBuilder />
             </StyledBox>
         </Grid>
-        <Box sx={{ width: "70%", pt: 7, margin: "auto"}}>
+        <Box sx={{ width: "90%", pt: 5, margin: "auto"}}>
             <LogoCollection  />    
         </Box>
     </Container>

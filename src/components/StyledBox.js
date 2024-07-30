@@ -4,7 +4,7 @@ const StyledBox = styled('div')(({ theme, height }) => ({
   alignSelf: 'center',
   width: '100%',
   height: height,
-  marginTop: theme.spacing(8),
+  marginTop: theme.spacing(3),
   borderRadius: theme.shape.borderRadius,
   outline: '1px solid',
   boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
@@ -12,7 +12,7 @@ const StyledBox = styled('div')(({ theme, height }) => ({
   outlineColor: 'hsla(220, 25%, 80%, 0.5)',
   backgroundSize: 'cover',
   [theme.breakpoints.up('sm')]: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(3),
     height: {height},
   },
   ...theme.applyStyles('dark', {

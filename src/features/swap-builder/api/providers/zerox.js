@@ -56,8 +56,17 @@ async function quote(swap, amountIn){
     }
 }
 
+async function createOperation(swap, prev, next, to){
+    // we need to execute 2 transactions
+    // 1. approve the router
+    // 2. execute the swap
+
+    return null;
+}
+
 export const ZeroXProvider = {
     canQuote,
     quote,
     providerId,
+    createOperation,
 }
