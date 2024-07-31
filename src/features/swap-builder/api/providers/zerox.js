@@ -3,6 +3,7 @@ import { getTokenAddress, getTokenChain } from "../network/networks";
 import { ROUTE_SEGMENT } from "../router/routesegment";
 import { numberFromBig, numberToBig } from "./utils";
 import { sendTransaction } from "../../../../lib/chain/transaction";
+import logo from '../../../../assets/images/0x_logo_sm.png'
 
 const providerId = "0x";
 const endpoints = {
@@ -107,4 +108,5 @@ export const ZeroXProvider = {
     quote,
     providerId,
     createOperation,
+    logo
 }

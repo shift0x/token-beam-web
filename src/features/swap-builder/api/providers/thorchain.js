@@ -1,3 +1,4 @@
+import logo from '../../../../assets/images/thorchain_logo_sm.png'
 import { canProviderSwapTokens } from "./utils";
 import { OneInchList, 
     PancakeswapList, 
@@ -22,6 +23,7 @@ const supportedTokens = [
 ]
 
 const apiBaseUrl = "https://api.thorswap.finance";
+
 
 
 const providerId = "thorchain";
@@ -71,4 +73,5 @@ export const ThorchainProvider = {
     quote,
     providerId,
     createOperation,
+    logo
 }

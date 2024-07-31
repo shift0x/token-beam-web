@@ -35,6 +35,10 @@ const destinationTokenStyle = {
 function SwapVisualizerNetworkInteraction({network, displaySwapOutputs}){
     const lastswap = network.items[network.items.length-1];
 
+    network.items.forEach(item => {
+        console.log(item);
+    })
+
     return (
             <Box display="flex" flexDirection="column" alignItems="center" sx={{margin: 3, marginLeft: 1}}>
                 <Grid container spacing={2}>
@@ -87,8 +91,7 @@ function SwapVisualizerNetworkInteraction({network, displaySwapOutputs}){
                                     &nbsp;
                                     { swap.from.chainId !== swap.to.chainId ? "crosschain via": "via" }
                                     &nbsp; </span>
-                                {swap.quote.execution.provider.providerId}
-                                
+                                    <Avatar src={swap.quote.execution.provider.logo} sx={networkAvatarStyle} />
                             </Box>
 
                             {(index + 1) % 4 === 0 && <Grid item xs={12}><Divider style={{ margin: '16px 0' }} /></Grid>}

@@ -2,6 +2,7 @@ import { sendTransaction } from "../../../../lib/chain/transaction";
 import { transferERC20Token } from "../../../../lib/erc20/erc20";
 import { canProviderSwapTokens, numberFromBig, numberToBig } from "./utils";
 import { ChainflipList } from "@swapkit/tokens";
+import logo from '../../../../assets/images/chainflip_logo_sm.png'
 
 const ERROR_CCM_NOT_SUPPORTED = "ccm not yet supported"
 
@@ -105,4 +106,5 @@ export const ChainFlipProvider = {
     quote,
     providerId,
     createOperation,
+    logo,
 }

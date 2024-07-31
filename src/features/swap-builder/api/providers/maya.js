@@ -1,5 +1,6 @@
 import { MayaList } from "@swapkit/tokens";
 import { canProviderSwapTokens } from "./utils";
+import logo from '../../../../assets/images/maya_logo_sm.png'
 
 const apiBaseUrl = "https://api.swapkit.dev/quote"
 
@@ -56,5 +57,6 @@ export const MayaProvider = {
     canQuote,
     quote,
     providerId,
-    createOperation
+    createOperation,
+    logo
 }

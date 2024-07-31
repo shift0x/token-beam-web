@@ -1,6 +1,6 @@
 import { ChainFlipProvider } from "./chainflip";
 import { MayaProvider } from "./maya";
-import { ThorchainProvider } from "./thorswap";
+import { ThorchainProvider } from "./thorchain";
 import { ZeroXProvider } from "./zerox";
 
 const providers = [
