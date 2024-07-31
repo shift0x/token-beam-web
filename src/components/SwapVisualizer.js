@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Container } from '@mui/material';
+import { Avatar, Container, Skeleton } from '@mui/material';
 import SwapVisualizerNetworkInteraction from './SwapVisualizerNetworkInteraction';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -50,15 +50,26 @@ function makeUIModelFromSwap(swap){
     return model;
 }
 
-function SwapsVisualizer({ swap }) {
+function SwapsVisualizer({ swap, loading }) {
     const model = makeUIModelFromSwap(swap)
     const destinationAsset = model.length > 0 ? swap.route[swap.route.length-1].to : null;
     const lastSwappedNetwork = model.length > 0 ? model[model.length-1] : null;
 
   return (
     <Container>
-        { model.length ===0 ? <></> :
-            <Timeline position="right">
+        { loading ? 
+            <>
+                <Skeleton variant='rectangle' height="70px" sx={{mb: 2}} />
+                <Skeleton sx={{mb: 1}} />
+                <Skeleton  sx={{mb: 2}} />
+                <Skeleton variant='rectangle' height="40px" />
+            </>
+             
+             :
+        
+            <Timeline position="right" sx={{
+                display: model.length === 0 ? "none" : "block"
+            }}>
                 {model.map((network) => (
                     <>
 
@@ -98,6 +109,7 @@ function SwapsVisualizer({ swap }) {
 
 SwapsVisualizer.propTypes = {
     swap: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 export default SwapsVisualizer

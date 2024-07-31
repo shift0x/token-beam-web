@@ -1,9 +1,10 @@
-import { Avatar, Box, Button, Grid, Input, List, ListItem, ListItemAvatar, Popover, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Input, List, ListItem, ListItemAvatar, Popover, Stack, Typography, Skeleton } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useMemo, useRef } from 'react';
 import { useEffect, useState } from 'react';
 
 
-function SwapWaypoint({label, details, networks, update, readonly}){
+function SwapWaypoint({label, details, networks, update, readonly, loading}){
     const [anchorEl, setAnchorEl] = useState(null)
 
     const [selectedNetworkIndex, setSelectedNetworkIndex] = useState(-1);
@@ -12,22 +13,49 @@ function SwapWaypoint({label, details, networks, update, readonly}){
     const [searchText, setSearchText] = useState("");
     const [swapAmount, setSwapAmount] = useState(0);
     const [isValidAmount,setIsValidAmount] = useState(true);
+    const amountInputRef = useRef(null)
+    
     
 
     const selectedTokenId = selectedToken ? selectedToken.id : -1;
-    const selectedNetwork = selectedNetworkIndex !==-1 ? networks[selectedNetworkIndex] : null;
+    var selectedNetwork = selectedNetworkIndex !==-1 ? networks[selectedNetworkIndex] : null;
     const canSearch = selectedNetworkIndex !==-1;
 
+    const networkUUID = useMemo(() => {
+        const ids = networks
+            .map(network => { return network.chainId })
+            .sort((x,y) => { return x > y ? 1 : -1})
+
+        return ids.join("::")
+    })
+
     useEffect(() => {
-        if(selectedNetworkIndex ===-1) {
+        setSelectedNetworkIndex(-1)
+        setSelectedToken(null)
+        setSearchText("");
+        setSwapAmount(0);
+
+        clearAmountInput();
+        
+        selectedNetwork = null;
+
+        update({ network: null, token: null, amount: swapAmount})
+    }, [networkUUID])
+
+    useEffect(() => {
+        if(selectedNetworkIndex == -1) {
             setNetworkTokens([]);
 
             return;
         }
        
         const searchValue = searchText.toLowerCase().trim();
+        const selectedNetwork = networks[selectedNetworkIndex];
+
+        if(!selectedNetwork) 
+            return
         
-        let allTokens =  networks[selectedNetworkIndex].tokens;
+        let allTokens =  selectedNetwork.tokens;
 
         let filteredTokens = allTokens
             .filter((token) => {
@@ -41,7 +69,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
 
 
         setNetworkTokens(filteredTokens.splice(0, 100));
-    }, [selectedNetworkIndex, searchText, networks])
+    }, [selectedNetworkIndex, searchText, networkUUID])
 
 
     const handleClick = (event) => {
@@ -52,15 +80,26 @@ function SwapWaypoint({label, details, networks, update, readonly}){
         setAnchorEl(null);
     };
 
+    function clearAmountInput(){
+        setSwapAmount(0);
+
+        if(amountInputRef.current){
+            const elem = amountInputRef.current.children && amountInputRef.current.children.length > 0 ? amountInputRef.current.children[amountInputRef.current.children.length-1] :amountInputRef.current;
+            elem.value = "" 
+        }
+    }
+
     function handleNetworkClicked(index) {
         setSelectedNetworkIndex(index);
         setSelectedToken(null);
         setSearchText("")
+        clearAmountInput();
     }
 
     function handleTokenClicked(token) {
         setSelectedToken(token);
         setAnchorEl(null);
+        clearAmountInput();
 
         update({ network: selectedNetwork, token: token, amount: swapAmount});
     }
@@ -96,7 +135,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
             <Grid item xs={6}>
                 <Box sx={{ textAlign: 'left' }}>
                     <Typography variant="caption" sx={{ color: 'darkgray'}}>{label}</Typography>
-                    { selectedNetwork !==null ? 
+                    { selectedNetwork != null ? 
                         <Box sx={{ display: "inline-flex", ml: 1 }}>
                             <Avatar src={selectedNetwork.icon} sx={{width: "20px", height: "20px"}} />
                         </Box> : null
@@ -119,7 +158,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                 "linear-gradient(to bottom, hsla(210, 98%, 48%, 0.8), hsl(210, 98%, 42%))"
                         }}>
 
-                        { selectedTokenId ===-1 ? <>Choose a token</>:
+                        { selectedTokenId === -1 ? <>Choose a token</>:
                             <>
                                 <Avatar src={selectedToken.icon} sx={{width: "25px", height: "25px", padding: "2px"}} />
                                 <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol ?? selectedToken.name} </span>
@@ -240,15 +279,34 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                     <Typography variant="caption" sx={{ color: 'darkgray'}}>amount</Typography>
                 </Box>
                 <Box sx={{ textAlign: 'right', mt: 2 }}>
-                        <Input
-                            type='text'
-                            readOnly={readonly}
-                            sx={{
-                                border: !isValidAmount ? "3px solid red" : "none",
-                                padding: "5px"
-                            }}
-                            onKeyUp={ e => handleKeyPressed(e)}
-                            onBlur={ e => handleSwapAmountChanged(e.target.value)} /> 
+                    { loading ? 
+                        <Skeleton /> :
+
+                        <>
+                        { readonly ? 
+                            <Box sx={{ marginTop: "5px"}}>
+                                {
+                                    details.amount > 1 ? 
+                                        details.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
+                                        details.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})
+                                }
+                            </Box> :
+
+                            <Input
+                                ref={amountInputRef}
+                                type='text'
+                                readOnly={readonly}
+                                sx={{
+                                    border: !isValidAmount ? "3px solid red" : "none",
+                                    padding: "5px"
+                                }}
+                                onKeyUp={ e => handleKeyPressed(e)}
+                                onBlur={ e => handleSwapAmountChanged(e.target.value)}  /> 
+                        }
+
+                        </>
+                    }
+                        
                     
                 </Box>
             </Grid>
@@ -261,7 +319,8 @@ SwapWaypoint.propTypes = {
     details: PropTypes.PropTypes.object.isRequired,
     networks: PropTypes.arrayOf(PropTypes.object).isRequired,
     update: PropTypes.func.isRequired,
-    readonly: PropTypes.bool.isRequired
+    readonly: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 export default SwapWaypoint;

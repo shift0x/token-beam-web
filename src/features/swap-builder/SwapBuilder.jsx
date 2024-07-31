@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup, Box, Button, CircularProgress, Divider, Grid, Typography } from "@mui/material";
+import { Avatar, AvatarGroup, Box, Button, CircularProgress, Divider, Grid, Typography, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import SwapWaypoint from "./SwapWaypoint";
 import { getNetworks } from "./api/network/networks";
@@ -98,9 +98,19 @@ function SwapBuilder({network}){
     }, 1000)  
   }, [allSwapRoutes]);
 
-  
-  
-  
+  useEffect(() => {
+    updateToDetails( { 
+      amount: selectedRoute ? selectedRoute.amountOut : 0, 
+      token: toDetails.token, 
+      network: toDetails.network })
+      
+  }, [selectedRoute])
+
+  function onSwapRouteSelected(route){
+    setSelectedRoute(route.route)
+  }
+
+
 
   return (
     <>
@@ -118,7 +128,7 @@ function SwapBuilder({network}){
                   <KeyboardArrowDownIcon color="primary" />
                 </Box>
               </Divider>
-              <SwapWaypoint label="to" networks={networks} details={toDetails} update={updateToDetails} readonly={true} />
+              <SwapWaypoint label="to" networks={networks} details={toDetails} update={updateToDetails} readonly={true} loading={isBuildingRoutes} />
               <Divider sx={{ my: 2 }} />
               <Box sx={{
                 textAlign: "center",
@@ -155,34 +165,39 @@ function SwapBuilder({network}){
 
             <Box display="flex" flexDirection="column" alignItems="center" sx={{margin: 3, marginLeft: 1}}>
               <Grid container spacing={2} justifyContent="center">
-                { model.map(route => (
-                  <Box alignItems="center" justifyContent="center" sx={{
-                    display: "flex",
-                    marginLeft: 2,
-                    cursor: "pointer",
-                    backgroundColor: selectedRoute.id ===route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
-                    padding: "5px 15px",
-                    color: selectedRoute.id ===route.route.id ? "#fff" : "unset"
-                  }} onClick={ () => { setSelectedRoute(route.route) }}>
-                        <AvatarGroup>
-                            { route.tokens.map(token => (
-                                <Avatar src={token.icon} sx={tokenAvatarStyle} />
-                            ))}
-                        </AvatarGroup>
+                { isBuildingRoutes ? 
+                  <Skeleton /> :
+                  <>
+                    { model.map(route => (
+                      <Box alignItems="center" justifyContent="center" sx={{
+                        display: "flex",
+                        marginLeft: 2,
+                        cursor: "pointer",
+                        backgroundColor: selectedRoute.id ===route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
+                        padding: "5px 15px",
+                        color: selectedRoute.id ===route.route.id ? "#fff" : "unset"
+                      }} onClick={ () => { onSwapRouteSelected(route) }}>
+                            <AvatarGroup>
+                                { route.tokens.map(token => (
+                                    <Avatar src={token.icon} sx={tokenAvatarStyle} />
+                                ))}
+                            </AvatarGroup>
 
-                        <Typography variant="body1" sx={{ marginLeft: "5px"}}>
-                            {
-                                route.amountOut > 1 ? 
-                                  route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
-                                  route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})
-                            }
-                        </Typography>
-                  </Box>
-                ))}
+                            <Typography variant="body1" sx={{ marginLeft: "5px"}}>
+                                {
+                                    route.amountOut > 1 ? 
+                                      route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
+                                      route.amountOut.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})
+                                }
+                            </Typography>
+                      </Box>
+                    ))}
+                  </>
+                }
               </Grid>
             </Box>
 
-            <SwapsVisualizer swap={selectedRoute} />
+            <SwapsVisualizer swap={selectedRoute} loading={isBuildingRoutes} />
           </Box>
         </Grid>
       </Grid>
