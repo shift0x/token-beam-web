@@ -21,6 +21,8 @@ async function quote(swap, amountIn, network){
         providers: [ "MAYACHAIN" ]
     }
 
+    const result = { amountOut: -1, provider: MayaProvider }
+
     try {
         const response = await fetch(apiBaseUrl, {
             method: "POST",
@@ -37,14 +39,13 @@ async function quote(swap, amountIn, network){
 
         const optimalRoute = body.routes[0]
 
-        return {
-            amountOut: Number(optimalRoute.expectedBuyAmount),
-            route: optimalRoute,
-            data: body,
-            provider: MayaProvider
-        }
+        result.amountOut = Number(optimalRoute.expectedBuyAmount);
+        result.route = optimalRoute;
+        result.data = body;
     } catch(err){
-        return { amountOut: 0, error: err}
+        result.error = err
+    } finally {
+        return result;
     }
 }
 

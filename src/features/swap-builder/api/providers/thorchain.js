@@ -49,19 +49,23 @@ async function quote(swap, amountIn, network){
         sellAmount: amountIn
     });
 
+    const result = { amountOut: -1, provider: ThorchainProvider }
+
     try {
         const response = await fetchWithConfig(`${apiBaseUrl}/aggregator/tokens/quote?${searchParams}`);
         const routes = response.routes;
 
-        if(!routes) { return { amountOut: 0 }}
+        if(!routes) { return result }
 
         const optimalRoute = routes[0];
 
-        return { amountOut: Number(optimalRoute.expectedOutput), route: optimalRoute, data: response, provider:  ThorchainProvider }
+        result.amountOut = Number(optimalRoute.expectedOutput);
+        result.route = optimalRoute;
+        result.data = response;
     } catch(err){
-        console.log(err);
-        
-        return { amountOut: 0, error: err}
+        result.error = err
+    } finally {
+        return result;
     }
 }
 

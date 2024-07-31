@@ -44,7 +44,6 @@ async function quote(swap, amountIn, network){
         result.route = body.data
         result.data = body
     } catch(err){
-        console.log(err);
         result.error = err
     } finally {
         return result
