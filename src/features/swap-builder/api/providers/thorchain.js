@@ -39,7 +39,10 @@ async function fetchWithConfig(url) {
     return body;
   }
 
-async function quote(swap, amountIn){
+async function quote(swap, amountIn, network){
+    if(network !=="mainnet")
+        return { amountOut: 0, error: `network (${network}) not supported` }
+
     const searchParams = new URLSearchParams({
         sellAsset: swap.from.id,
         buyAsset: swap.to.id,

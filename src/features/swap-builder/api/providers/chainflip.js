@@ -27,6 +27,7 @@ async function createBaseQuoteParams(swap, amountIn, method, network){
 }
 
 async function quote(swap, amountIn, network){
+    
     const result = { amountOut: -1, provider: ChainFlipProvider }
     const params = await createBaseQuoteParams(swap, amountIn, "chainflip.getPrice", network);
     

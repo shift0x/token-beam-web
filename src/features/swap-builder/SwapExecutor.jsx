@@ -94,6 +94,8 @@ function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes, network, sw
             const op = trade.operation[i];
 
             try {
+                updateSwapState(i+1, false, true);
+
                 await op.execute(signer, prev, next);
 
                 updateSwapState(i+1, true, false);
