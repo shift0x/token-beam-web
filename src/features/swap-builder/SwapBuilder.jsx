@@ -1,5 +1,5 @@
 import { Avatar, AvatarGroup, Box, Button, CircularProgress, Divider, Grid, Typography, Skeleton } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import SwapWaypoint from "./SwapWaypoint";
 import { getNetworks } from "./api/network/networks";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -79,10 +79,22 @@ function SwapBuilder({network}){
   const [ quoteErrorMessage, setQuoteErrorMessage] = useState(null);
   const [ model, setModel] = useState([]);
   const [ isSwapDialogOpen, setIsSwapDialogOpen ] = useState(false);
-
-
   
   const networks = getNetworks(network);
+
+  const networkUUID = useMemo(() => {
+    const ids = networks
+        .map(network => { return network.chainId })
+        .sort((x,y) => { return x > y ? 1 : -1})
+
+    return ids.join("::")
+})
+
+useEffect(() => {
+  setSwapRoutes([]);
+  setModel([])
+  setSelectedRoute(null);
+}, [networkUUID])
 
   useEffect(() => {
     setTimeout(() => {
@@ -91,11 +103,10 @@ function SwapBuilder({network}){
       const optimalRoute = allSwapRoutes[0];
       const errorMessage = !optimalRoute ? "no routes found between assets" : optimalRoute.amountOut ===0 ? "input amount is too small or too large" : null;
 
-
       setSelectedRoute(optimalRoute);
       setQuoteErrorMessage(errorMessage);
       setModel(allSwapRoutes.map(route => { return createModel(route)}));
-    }, 1000)  
+    }, 250)  
   }, [allSwapRoutes]);
 
   useEffect(() => {
@@ -173,9 +184,9 @@ function SwapBuilder({network}){
                         display: "flex",
                         marginLeft: 2,
                         cursor: "pointer",
-                        backgroundColor: selectedRoute.id ===route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
+                        backgroundColor: selectedRoute && selectedRoute.id ===route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
                         padding: "5px 15px",
-                        color: selectedRoute.id ===route.route.id ? "#fff" : "unset"
+                        color: selectedRoute && selectedRoute.id ===route.route.id ? "#fff" : "unset"
                       }} onClick={ () => { onSwapRouteSelected(route) }}>
                             <AvatarGroup>
                                 { route.tokens.map(token => (
