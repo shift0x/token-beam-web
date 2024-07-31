@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Container, Icon } from '@mui/material';
+import { Avatar, Container } from '@mui/material';
 import SwapVisualizerNetworkInteraction from './SwapVisualizerNetworkInteraction';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -8,9 +8,7 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import TimelineOppositeContent, {
-  timelineOppositeContentClasses,
-} from '@mui/lab/TimelineOppositeContent';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
 function makeUIModelFromSwap(swap){
     if(!swap) { return [] }
@@ -59,7 +57,7 @@ function SwapsVisualizer({ swap }) {
 
   return (
     <Container>
-        { model.length == 0 ? <></> :
+        { model.length ===0 ? <></> :
             <Timeline position="right">
                 {model.map((network) => (
                     <>

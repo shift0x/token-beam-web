@@ -18,6 +18,7 @@ function makeToken(network, token){
         icon: token.image,
         address: token.address,
         networkIcon: network.icon,
+        networkName: network.name,
         external: {
             coingecko: {
                 id: token.id,
@@ -58,6 +59,7 @@ function makeNetworkNativeToken(network) {
         name: `${symbol} (Native)`,
         icon: network.native.icon,
         networkIcon: network.icon,
+        networkName: network.name,
         isNative: true,
         external: {}
     }
@@ -74,10 +76,12 @@ function init(){
 }
 
 export function getNetworks(type){
-    return Object
+    const result = Object
         .keys(networks)
         .map(id => { return networks[id]})
-        .filter(network => { return network.network == type});
+        .filter(network => { return network.network ===type});
+
+    return result;
 }
 
 export function getNetworkNativeToken(chainId){

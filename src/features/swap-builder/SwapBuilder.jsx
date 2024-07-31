@@ -5,8 +5,7 @@ import { getNetworks } from "./api/network/networks";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SwapExecutor from "./SwapExecutor";
 import SwapsVisualizer from "../../components/SwapVisualizer";
-import { getExecutionOperations } from "./api/router/router";
-import { useAddress, useChainId, useSwitchChain, useConnect, metamaskWallet, useSigner } from "@thirdweb-dev/react";
+
 import PropTypes from 'prop-types';
 
 const dividerStyle = {
@@ -63,15 +62,13 @@ function createModel(route) {
   }
 
   route.route.forEach((swap, index) => {
-    if(index == 0){ model.tokens.push(swap.from) }
+    if(index ===0){ model.tokens.push(swap.from) }
 
     model.tokens.push(swap.to);
   })
 
   return model;
 }
-
-
 
 function SwapBuilder({network}){
   const [ fromDetails, updateFromDetails] = useState({amount:0, token: null, network: null });
@@ -80,15 +77,9 @@ function SwapBuilder({network}){
   const [ selectedRoute, setSelectedRoute] = useState(null);
   const [ isBuildingRoutes, setIsBuildingRoutes] = useState(false);
   const [ quoteErrorMessage, setQuoteErrorMessage] = useState(null);
-  const [ model, setModel] = useState([])
+  const [ model, setModel] = useState([]);
+  const [ isSwapDialogOpen, setIsSwapDialogOpen ] = useState(false);
 
-  const connectedAddress = useAddress();
-  const connectedChainId = useChainId();
-  const switchChain = useSwitchChain();
-  const connectWallet = useConnect();
-  const signer = useSigner();
-
-  const metamaskConfig = metamaskWallet();
 
   
   const networks = getNetworks(network);
@@ -98,7 +89,7 @@ function SwapBuilder({network}){
       setIsBuildingRoutes(false);
 
       const optimalRoute = allSwapRoutes[0];
-      const errorMessage = !optimalRoute ? "no routes found between assets" : optimalRoute.amountOut == 0 ? "input amount is too small or too large" : null;
+      const errorMessage = !optimalRoute ? "no routes found between assets" : optimalRoute.amountOut ===0 ? "input amount is too small or too large" : null;
 
 
       setSelectedRoute(optimalRoute);
@@ -107,29 +98,8 @@ function SwapBuilder({network}){
     }, 1000)  
   }, [allSwapRoutes]);
 
-  async function ensureUserIsConnectedToCorrectChain(chainId){
-    await connectWallet(metamaskConfig);
-    await switchChain(chainId);
-  }
-
-  async function swap(){
-    const trade = selectedRoute;
-    const chainId = Number(trade.route[0].from.chainId)
-
-    await ensureUserIsConnectedToCorrectChain(chainId);
-
-    console.log({connectedAddress, connectedChainId, trade})
-
-    trade.operation = await getExecutionOperations(selectedRoute.route, connectedAddress, network);
-
-    for(var i =0; i < trade.operation.length; i++){
-      const prev = i == 0 ? null : trade.operation[i-1];
-      const next = i == trade.operation.length-1 ? null : trade.operation[i+1];
-      const op = trade.operation[i];
-
-      await op.execute(signer, prev, next);
-    }
-  }
+  
+  
   
 
   return (
@@ -160,7 +130,7 @@ function SwapBuilder({network}){
                     borderRadius: "24px",
                     padding: 2.5,
                     fontSize: "1rem"
-                }} onClick={ swap }>
+                }} onClick={ () => { setIsSwapDialogOpen(true) } }>
                     { !isBuildingRoutes ? 
                       <>
                          Swap
@@ -190,9 +160,9 @@ function SwapBuilder({network}){
                     display: "flex",
                     marginLeft: 2,
                     cursor: "pointer",
-                    backgroundColor: selectedRoute.id == route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
+                    backgroundColor: selectedRoute.id ===route.route.id ? "hsla(210, 98%, 55%, 0.3)" : "unset",
                     padding: "5px 15px",
-                    color: selectedRoute.id == route.route.id ? "#fff" : "unset"
+                    color: selectedRoute.id ===route.route.id ? "#fff" : "unset"
                   }} onClick={ () => { setSelectedRoute(route.route) }}>
                         <AvatarGroup>
                             { route.tokens.map(token => (
@@ -222,7 +192,10 @@ function SwapBuilder({network}){
           to={toDetails} 
           network={network}
           setSwapRoutes={setSwapRoutes} 
-          setIsBuildingRoutes={setIsBuildingRoutes}  />
+          setIsBuildingRoutes={setIsBuildingRoutes}
+          onDialogClosed={() => { setIsSwapDialogOpen(false) }}
+          shouldExecute = { isSwapDialogOpen }
+          swapToExecute={selectedRoute}  />
       </>
   )
 }

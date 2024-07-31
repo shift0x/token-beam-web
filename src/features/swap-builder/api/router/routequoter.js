@@ -32,7 +32,7 @@ export async function getQuote(id, from, to, route, network){
     }
 
     const quote = { id, route }
-    const isCompletedQuote = route.filter(x => { return x.quote == null}).length == 0;
+    const isCompletedQuote = route.filter(x => { return !x.quote }).length ===0;
 
     quote.amountIn = from.amount;
     quote.amountOut = isCompletedQuote ? route[route.length-1].quote.amountOut : 0;

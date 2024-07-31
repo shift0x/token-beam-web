@@ -28,7 +28,7 @@ const allTokens = [
 ]
 
 async function getTokenDecimals(tokenToLookup){
-    const token = allTokens.find(t => { return t.identifier.toUpperCase() == tokenToLookup.id.toUpperCase() })
+    const token = allTokens.find(t => { return t.identifier.toUpperCase() ===tokenToLookup.id.toUpperCase() })
 
     if(!token){ return getTokenDecimalsFromChain(tokenToLookup); }
 
@@ -36,10 +36,10 @@ async function getTokenDecimals(tokenToLookup){
 }
 
 export function canProviderSwapTokens(from, to, supportedTokens){
-    const supportedFromToken = supportedTokens.find(token => { return token.identifier.toUpperCase() == from.toUpperCase()});
-    const supportedToToken = supportedTokens.find(token => { return token.identifier.toUpperCase() == to.toUpperCase()});
+    const supportedFromToken = supportedTokens.find(token => { return token.identifier.toUpperCase() ===from.toUpperCase()});
+    const supportedToToken = supportedTokens.find(token => { return token.identifier.toUpperCase() ===to.toUpperCase()});
 
-    return supportedFromToken != null && supportedToToken != null;
+    return supportedFromToken !==null && supportedToToken !==null;
 }
 
 export async function numberToBig(token, amount) {

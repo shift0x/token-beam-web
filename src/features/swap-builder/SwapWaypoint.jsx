@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Grid, Icon, Input, List, ListItem, ListItemAvatar, ListItemIcon, Popover, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Input, List, ListItem, ListItemAvatar, Popover, Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
@@ -15,11 +15,11 @@ function SwapWaypoint({label, details, networks, update, readonly}){
     
 
     const selectedTokenId = selectedToken ? selectedToken.id : -1;
-    const selectedNetwork = selectedNetworkIndex != -1 ? networks[selectedNetworkIndex] : null;
-    const canSearch = selectedNetworkIndex != -1;
+    const selectedNetwork = selectedNetworkIndex !==-1 ? networks[selectedNetworkIndex] : null;
+    const canSearch = selectedNetworkIndex !==-1;
 
     useEffect(() => {
-        if(selectedNetworkIndex == -1) {
+        if(selectedNetworkIndex ===-1) {
             setNetworkTokens([]);
 
             return;
@@ -31,17 +31,17 @@ function SwapWaypoint({label, details, networks, update, readonly}){
 
         let filteredTokens = allTokens
             .filter((token) => {
-                const isEmptySearch = searchText.trim().length == 0 
-                const isNameMatch = token.name && token.name.toLowerCase().indexOf(searchValue) != -1
-                const isSymbolMatch = token.symbol && token.symbol.toLowerCase().indexOf(searchValue) != -1
-                const isAddressMatch = token.address && token.address.toLowerCase().indexOf(searchValue) != -1
+                const isEmptySearch = searchText.trim().length ===0 
+                const isNameMatch = token.name && token.name.toLowerCase().indexOf(searchValue) !==-1
+                const isSymbolMatch = token.symbol && token.symbol.toLowerCase().indexOf(searchValue) !==-1
+                const isAddressMatch = token.address && token.address.toLowerCase().indexOf(searchValue) !==-1
 
                 return isEmptySearch || isNameMatch || isSymbolMatch || isAddressMatch;
             });
 
 
         setNetworkTokens(filteredTokens.splice(0, 100));
-    }, [selectedNetworkIndex, searchText])
+    }, [selectedNetworkIndex, searchText, networks])
 
 
     const handleClick = (event) => {
@@ -90,7 +90,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
             <Grid item xs={6}>
                 <Box sx={{ textAlign: 'left' }}>
                     <Typography variant="caption" sx={{ color: 'darkgray'}}>{label}</Typography>
-                    { selectedNetwork != null ? 
+                    { selectedNetwork !==null ? 
                         <Box sx={{ display: "inline-flex", ml: 1 }}>
                             <Avatar src={selectedNetwork.icon} sx={{width: "20px", height: "20px"}} />
                         </Box> : null
@@ -99,21 +99,21 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                 <Box sx={{ textAlign: 'left', mt: 2 }} >
                     <Button id={id} variant="contained" onClick={handleClick} sx={{
                             borderRadius: "24px",
-                            boxShadow: selectedTokenId != -1 ? 
+                            boxShadow: selectedTokenId !==-1 ? 
                                 "unset":
                                 "inset 0 2px 0 hsla(210, 100%, 80%, 0.2),inset 0 -2px 0 hsla(210, 100%, 35%, 0.4)",
-                            border: selectedTokenId != -1 ?
+                            border: selectedTokenId !==-1 ?
                                 "1px solid hsl(0, 0%, 82%)":
                                 "1px solid hsl(210, 98%, 42%)",
-                            backgroundColor: selectedTokenId != -1 ?
+                            backgroundColor: selectedTokenId !==-1 ?
                                 "hsl(0, 0%, 98%)":
                                 "hsl(210, 100%, 65%)",
-                            backgroundImage: selectedTokenId != -1 ?  
+                            backgroundImage: selectedTokenId !==-1 ?  
                                 "linear-gradient(to bottom, hsla(0, 0%, 99%), hsl(0, 0%, 98%))" : 
                                 "linear-gradient(to bottom, hsla(210, 98%, 48%, 0.8), hsl(210, 98%, 42%))"
                         }}>
 
-                        { selectedTokenId == -1 ? <>Choose a token</>:
+                        { selectedTokenId ===-1 ? <>Choose a token</>:
                             <>
                                 <Avatar src={selectedToken.icon} sx={{width: "25px", height: "25px", padding: "2px"}} />
                                 <span style={{color: "#000", fontWeight: "600", fontSize: "12px", textTransform: "uppercase"}}>{selectedToken.symbol ?? selectedToken.name} </span>
@@ -146,7 +146,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                     pb: 2
                                 }}>
                                     {networks.map(( network , index) => (
-                                        <Box sx={{
+                                        <Box id={index} sx={{
                                                 padding: "5px",
                                                 ml: "5px",
                                                 marginTop: "10px",
@@ -154,7 +154,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                                 border: "2px solid #eee",
                                                 borderRadius: "10px",
                                                 cursor: "pointer",
-                                                backgroundColor: selectedNetworkIndex == index ? '#e2f0fe' : '#fcfcfc',
+                                                backgroundColor: selectedNetworkIndex ===index ? '#e2f0fe' : '#fcfcfc',
                                             }}
 
                                             onClick={ () => handleNetworkClicked(index)}
@@ -199,7 +199,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                 }}>
                                     <List sx={{pt:0}}>
                                         {selectedNetworkTokens.map(( token ) => (
-                                            <ListItem sx={{
+                                            <ListItem id={`${token.chainId}.${token.id}`} sx={{
                                                 borderBottom: "1px solid #efefef",
                                                 cursor: "pointer",
                                                 transition: 'all 0.3s',

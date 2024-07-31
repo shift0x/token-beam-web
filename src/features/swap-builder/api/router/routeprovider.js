@@ -3,16 +3,15 @@ import { ROUTE_SEGMENT } from "./routesegment";
 import { getNetworkNativeToken } from "../network/networks";
 import { getProvidersForSwap } from "../providers/providers";
 
-const baseNetwork = getNetworkNativeToken("1");
-
 function getSegmentId(route) {
     const segments = route.map(r => { return r.segment })
 
     return segments.join("::");
 }
 
-function makeRoutes(from, to) {
-    const isCrossNetworkSwap = from.network.chainId != to.network.chainId
+function makeRoutes(from, to, network) {
+    const baseNetwork = network ==="mainnet" ? getNetworkNativeToken("1") : getNetworkNativeToken("11155111");
+    const isCrossNetworkSwap = from.network.chainId !==to.network.chainId
 
     const tokenToNative = from.token.isNative ? null : { segment: ROUTE_SEGMENT.tokenToNative, from: from.token, to: from.network.native };
     const nativeToToken = to.token.isNative ? null : { segment: ROUTE_SEGMENT.nativeToToken, from: to.network.native, to: to.token };
@@ -25,7 +24,7 @@ function makeRoutes(from, to) {
     const crossNetworkMultiHop = [
         { segment: ROUTE_SEGMENT.crosschainNativeToNative, from: from.network.native, to: baseNetwork },
         { segment: ROUTE_SEGMENT.crosschainNativeToNative, from: baseNetwork, to: to.network.native }
-    ].filter(path => { return path.from.id != path.to.id})
+    ].filter(path => { return path.from.id !==path.to.id})
 
     if(crossNetworkMultiHop.length > 1) {
         crossNetwork.push(crossNetworkMultiHop);
@@ -35,17 +34,17 @@ function makeRoutes(from, to) {
         crossNetwork.push([
             { segment: ROUTE_SEGMENT.crosschainTokenToNative, from: from.token, to: baseNetwork },
             { segment: ROUTE_SEGMENT.crosschainNativeToNative, from: baseNetwork, to: to.network.native }
-        ].filter(path => { return path.from.id != path.to.id}))
+        ].filter(path => { return path.from.id !==path.to.id}))
     }
 
     if(!to.token.isNative && isCrossNetworkSwap) {
         crossNetwork.push([
             { segment: ROUTE_SEGMENT.crosschainNativeToNative, from: from.network.native, to: baseNetwork },
             { segment: ROUTE_SEGMENT.crosschainNativeToToken, from: baseNetwork, to: to.token }
-        ].filter(path => { return path.from.id != path.to.id}))
+        ].filter(path => { return path.from.id !==path.to.id}))
     }
 
-    if(!from.token.isNative && !to.token.isNative && isCrossNetworkSwap && from.token.chainId != baseNetwork.chainId) {
+    if(!from.token.isNative && !to.token.isNative && isCrossNetworkSwap && from.token.chainId !==baseNetwork.chainId) {
         crossNetwork.push([
             { segment: ROUTE_SEGMENT.crosschainTokenToNative, from: from.token, to: baseNetwork },
             { segment: ROUTE_SEGMENT.crosschainNativeToToken, from: baseNetwork, to: to.token }
@@ -62,19 +61,19 @@ function makeRoutes(from, to) {
     } else if(!from.token.isNative && to.token.isNative && isCrossNetworkSwap){
         routes.push([ { segment: ROUTE_SEGMENT.crosschainTokenToNative, from: from.token, to: to.token } ])
     } else if (!isCrossNetworkSwap){
-        routes.push([ tokenToNative, nativeToToken].filter(swap => { return swap != null }));
+        routes.push([ tokenToNative, nativeToToken].filter(swap => { return swap !==null }));
     }
 
     crossNetwork.forEach(path => {
         let route = [];
 
-        if(tokenToNative != null && path[0].from.id != tokenToNative.from.id) {
+        if(tokenToNative !==null && path[0].from.id !==tokenToNative.from.id) {
             route.push(tokenToNative)
         }
 
         route = route.concat(path);
 
-        if(nativeToToken != null && path[path.length-1].to.id != nativeToToken.to.id) {
+        if(nativeToToken !==null && path[path.length-1].to.id !==nativeToToken.to.id) {
             route.push(nativeToToken);
         }
 
@@ -101,7 +100,7 @@ function filterQuoteableRoutes(routes, network) {
         route.forEach(swap => {
             swap.providers = getProvidersForSwap(swap, network);
 
-            if(swap.providers.length == 0) {
+            if(swap.providers.length ===0) {
                 canQuote = false;
             }
         });
@@ -115,7 +114,7 @@ function filterQuoteableRoutes(routes, network) {
 }
 
 export function getRoutes(from, to, network){
-    const routes = makeRoutes(from, to);
+    const routes = makeRoutes(from, to, network);
     const quoteableRoutes = filterQuoteableRoutes(routes, network);
 
     return quoteableRoutes

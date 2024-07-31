@@ -102,6 +102,13 @@
                 "name": "USDC",
                 "image": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
                 "address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"
+            },
+            {
+                "id": "usdt",
+                "symbol": "usdt",
+                "name": "USDT",
+                "image": "https://coin-images.coingecko.com/coins/images/35073/large/logo.png?1707292836",
+                "address": "0x4179710a60f578ca2b2b219b1c3ea8b2891d88e7"
             }
         ],
         "external": {
@@ -122,6 +129,15 @@
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
         "type": "evm",
         "providers": ["chainflip"],
+        "tokens": [
+            {
+                "id": "usd-coin",
+                "symbol": "usdc",
+                "name": "USDC",
+                "image": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+                "address": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
+            }
+        ],
         "external": {
             "coingecko": {
                 "networkId": ""

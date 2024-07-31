@@ -21,9 +21,9 @@ const supportedSegments = [
 ]
 
 function canQuote(swap){
-    if(supportedCrosschainSegments.indexOf(swap.segment) != -1) {
-        const isSupportedSwapToToken = swap.segment == ROUTE_SEGMENT.crosschainNativeToToken && supportedChains.indexOf(swap.to.chainId) != -1;
-        const isSupportedSwapFromToken = swap.segment == ROUTE_SEGMENT.crosschainTokenToNative && supportedChains.indexOf(swap.from.chainId) != -1;
+    if(supportedCrosschainSegments.indexOf(swap.segment) !==-1) {
+        const isSupportedSwapToToken = swap.segment ===ROUTE_SEGMENT.crosschainNativeToToken && supportedChains.indexOf(swap.to.chainId) !==-1;
+        const isSupportedSwapFromToken = swap.segment ===ROUTE_SEGMENT.crosschainTokenToNative && supportedChains.indexOf(swap.from.chainId) !==-1;
         
         if(!isSupportedSwapToToken && !isSupportedSwapFromToken){ return false; }
 

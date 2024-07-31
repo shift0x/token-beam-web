@@ -10,7 +10,7 @@ const quoteApiBaseUrl = "https://token-beam-api.vercel.app/api"
 const providerId = "chainflip"
 
 function canQuote(swap, network){
-    return network == "testnet" || canProviderSwapTokens(swap.from.id, swap.to.id, ChainflipList.tokens)
+    return network ==="testnet" || canProviderSwapTokens(swap.from.id, swap.to.id, ChainflipList.tokens)
 }
 
 async function createBaseQuoteParams(swap, amountIn, method, network){
@@ -29,14 +29,14 @@ async function quote(swap, amountIn, network){
     const result = { amountOut: -1, provider: ChainFlipProvider }
     const params = await createBaseQuoteParams(swap, amountIn, "chainflip.getPrice", network);
     
-    if(params.amount == null){ return result; }
+    if(params.amount ===null){ return result; }
 
     try {
         const searchParams = new URLSearchParams(params);
         const response = await fetch(`${quoteApiBaseUrl}/execute?${searchParams}`);
         const body = await response.json();
 
-        if(body.error != null){ throw body.error; }
+        if(body.error !==null){ throw body.error; }
     
         result.amountOut = await numberFromBig(swap.to, body.data.amountOut)
         result.route = body.data
@@ -86,7 +86,7 @@ async function createOperation(swap, prev, next, to, amountIn, network){
         const response = await fetch(`${quoteApiBaseUrl}/execute?${searchParams}`);
         const body = await response.json();
 
-        if(body.error != null){ throw body.error; }
+        if(body.error !==null){ throw body.error; }
     
         operation.metadata = body.data;
         operation.swap = swap;

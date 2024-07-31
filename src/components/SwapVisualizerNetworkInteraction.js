@@ -63,7 +63,7 @@ function SwapVisualizerNetworkInteraction({network, displaySwapOutputs}){
                         <>
                             <Box alignItems="center" justifyContent="center" sx={ {
                                 ...swapBoxStyle,
-                                display: index == 0 ? "flex" : "none"
+                                display: index ===0 ? "flex" : "none"
                             }}>
                                 <AvatarGroup>
                                     <Avatar src={swap.from.icon} sx={networkAvatarStyle} />

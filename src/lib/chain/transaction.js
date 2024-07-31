@@ -7,5 +7,5 @@ export async function sendTransaction(signer, to, data, value){
     if(value)
         tx.value = value;
 
-    await signer.sendTransaction(tx);
+    return await signer.sendTransaction(tx);
 }

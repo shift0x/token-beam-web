@@ -21,7 +21,6 @@ import Web3WalletConnection from '../features/web3-wallet-connection/Web3WalletC
 function AppAppBar() {
   const [open, setOpen] = React.useState(false);
   const { pathname } = useLocation();
-  const isHomePage = pathname == "/";
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

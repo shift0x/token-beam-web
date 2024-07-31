@@ -8,6 +8,7 @@ export async function getQuotes(from, to, network){
     }));
 
 
+    console.log({from, to, routes, quotes})
     return quotes
         .filter(quote => { return quote.amountOut > 0})
         .sort((x,y)  => {
@@ -18,8 +19,8 @@ export async function getQuotes(from, to, network){
 export async function getExecutionOperations(route, to, network){
     const operations = await Promise.all(route.map((swap,index) => {
         const provider = swap.quote.execution.provider;
-        const prev = index == 0 ? null : route[index-1];
-        const next = index == route.length - 1 ? null : route[index+1];
+        const prev = index ===0 ? null : route[index-1];
+        const next = index ===route.length - 1 ? null : route[index+1];
 
         return provider.createOperation(swap, prev, next, to, swap.quote.amountIn, network);
     }));

@@ -10,9 +10,9 @@ function canQuote(swap){
 }
 
 async function quote(swap, amountIn, network){
-    if(network != "mainnet")
+    if(network !=="mainnet")
         return { amountOut: 0, error: `network (${network}) not supported` }
-    
+
     const params = {
         sellAsset: swap.from.id,
         buyAsset: swap.to.id,
@@ -32,7 +32,7 @@ async function quote(swap, amountIn, network){
 
         const body = await response.json();
 
-        if(!body.routes || body.routes.length == 0) { return { amountOut: 0, data: body }}
+        if(!body.routes || body.routes.length ===0) { return { amountOut: 0, data: body }}
 
         const optimalRoute = body.routes[0]
 
