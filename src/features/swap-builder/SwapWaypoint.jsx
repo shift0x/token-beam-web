@@ -65,6 +65,12 @@ function SwapWaypoint({label, details, networks, update, readonly}){
         update({ network: selectedNetwork, token: token, amount: swapAmount});
     }
 
+    function handleKeyPressed(e){
+        if(e.key == "Enter"){
+            handleSwapAmountChanged(e.target.value)
+        }
+    }
+
     function handleSwapAmountChanged(amount) {
         const amountAsNumber = amount.replace(/,/g, '');
 
@@ -241,7 +247,7 @@ function SwapWaypoint({label, details, networks, update, readonly}){
                                 border: !isValidAmount ? "3px solid red" : "none",
                                 padding: "5px"
                             }}
-                            onSubmit={ e => handleSwapAmountChanged(e.target.value)}
+                            onKeyUp={ e => handleKeyPressed(e)}
                             onBlur={ e => handleSwapAmountChanged(e.target.value)} /> 
                     
                 </Box>
