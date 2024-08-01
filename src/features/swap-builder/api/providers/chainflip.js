@@ -50,13 +50,6 @@ async function quote(swap, amountIn, network){
     }
 }
 
-async function getSummary(operation, prev, next) {
-
-    // 1. Approve chainflip router if input token is an ERC20
-
-    // 2. Send tokens / native asset to destination address
-}
-
 async function execute(signer, operation, prev, next){
     const depositAddress = operation.metadata.depositAddress
     const amount = operation.metadata.amount;
@@ -69,7 +62,6 @@ async function execute(signer, operation, prev, next){
     await sendTransaction(signer, to, calldata, value);
 }
 
-
 async function createOperation(swap, prev, next, to, amountIn, network){
     const params = await createBaseQuoteParams(swap, amountIn, "chainflip.getDepositAddress", network)
     const operation = {};
@@ -77,10 +69,21 @@ async function createOperation(swap, prev, next, to, amountIn, network){
     if(!next){
         params.destinationAddress = to;
     } else {
-        operation.error = ERROR_CCM_NOT_SUPPORTED
+        const crossChainProvider = next.quote.execution.provider
+        const crossChainMessage = await crossChainProvider.createCrossChainMessage(providerId, to, next.quote.execution);
 
-        return operation
+        if(!crossChainMessage){
+            operation.error = ERROR_CCM_NOT_SUPPORTED
+
+            return operation;
+        }
+
+        params.destinationAddress = crossChainMessage.to
+        params.message = crossChainMessage.message
+        params.gasBudget = crossChainMessage.gasBudget
     }
+
+    console.log({params})
 
     try {
         const searchParams = new URLSearchParams(params);
@@ -92,7 +95,6 @@ async function createOperation(swap, prev, next, to, amountIn, network){
         operation.metadata = body.data;
         operation.swap = swap;
         operation.getDestinationAddress = () => { return  operation.metadata.destAddress;  }
-        operation.getSummary = (prevOp, nextOp) => { return getSummary(operation, prevOp, nextOp); }
         operation.execute = (signer, prevOp, nextOp) => { return execute(signer, operation, prevOp, nextOp); }
     } catch(err){
         operation.error = err

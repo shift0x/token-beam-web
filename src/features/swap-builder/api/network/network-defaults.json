@@ -22,7 +22,7 @@
         "chainId": "42161",
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
         "type": "evm",
-        "providers": ["thorchain", "chainflip", "maya", "0x"],
+        "providers": ["thorchain", "chainflip", "maya", "0x", "tokenbeam"],
         "external": {
             "coingecko": {
                 "networkId": "arbitrum"
@@ -94,7 +94,7 @@
         "chainId": "11155111",
         "icon": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png",
         "type": "evm",
-        "providers": ["chainflip", "0x"],
+        "providers": ["chainflip", "0x", "tokenbeam"],
         "tokens": [
             {
                 "id": "usd-coin",
@@ -128,7 +128,7 @@
         "chainId": "421614",
         "icon": "https://coin-images.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
         "type": "evm",
-        "providers": ["chainflip"],
+        "providers": ["chainflip", "tokenbeam"],
         "tokens": [
             {
                 "id": "usd-coin",

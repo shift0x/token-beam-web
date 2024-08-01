@@ -104,5 +104,13 @@ export function getTokenAddress(token){
     return token.address;
 }
 
+export function isNetworkSupportedByProvider(chainId, provider) {
+    const network = networks[chainId];
+
+    if(!network) { return false; }
+
+    return network.providers.indexOf(provider) != -1;
+}
+
 init();
 

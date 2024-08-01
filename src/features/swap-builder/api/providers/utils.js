@@ -36,8 +36,8 @@ async function getTokenDecimals(tokenToLookup){
 }
 
 export function canProviderSwapTokens(from, to, supportedTokens){
-    const supportedFromToken = supportedTokens.find(token => { return token.identifier.toUpperCase() ===from.toUpperCase()});
-    const supportedToToken = supportedTokens.find(token => { return token.identifier.toUpperCase() ===to.toUpperCase()});
+    const supportedFromToken = supportedTokens.find(token => { return token.identifier.toUpperCase() === from.toUpperCase()});
+    const supportedToToken = supportedTokens.find(token => { return token.identifier.toUpperCase() === to.toUpperCase()});
 
     return supportedFromToken !==null && supportedToToken !==null;
 }
@@ -56,4 +56,8 @@ export async function numberFromBig(token, amount){
     if(!decimals) { return null }
 
     return Number(utils.formatUnits(amount.toString(), decimals));
+}
+
+export async function gasFromBig(amount){
+    return Number(utils.formatUnits(amount.toString(), 0))
 }

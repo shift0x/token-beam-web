@@ -35,10 +35,6 @@ const destinationTokenStyle = {
 function SwapVisualizerNetworkInteraction({network, displaySwapOutputs}){
     const lastswap = network.items[network.items.length-1];
 
-    network.items.forEach(item => {
-        console.log(item);
-    })
-
     return (
             <Box display="flex" flexDirection="column" alignItems="center" sx={{margin: 3, marginLeft: 1}}>
                 <Grid container spacing={2}>

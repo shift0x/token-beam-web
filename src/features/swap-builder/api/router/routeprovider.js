@@ -9,6 +9,7 @@ function getSegmentId(route) {
     return segments.join("::");
 }
 
+// this is fine for the hackathon, but this can be improved significantly
 function makeRoutes(from, to, network) {
     const baseNetwork = network ==="mainnet" ? getNetworkNativeToken("1") : getNetworkNativeToken("11155111");
     const isCrossNetworkSwap = from.network.chainId !==to.network.chainId

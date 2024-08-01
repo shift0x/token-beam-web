@@ -46,7 +46,7 @@ function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes, network, sw
 
     async function swap(){
         const trade = swapToExecute;
-        
+
         let operations = [
             { name: "finalize swap details", complete: false, pending: true }
         ]
@@ -88,6 +88,8 @@ function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes, network, sw
 
         updateSwapState(0, true, false);
 
+        console.log(trade.operation);
+
         for(var i =0; i < trade.operation.length; i++){
             const prev = i ===0 ? null : trade.operation[i-1];
             const next = i ===trade.operation.length-1 ? null : trade.operation[i+1];
@@ -96,10 +98,14 @@ function SwapExecutor({from, to, setSwapRoutes, setIsBuildingRoutes, network, sw
             try {
                 updateSwapState(i+1, false, true);
 
+                console.log(op);
+
                 await op.execute(signer, prev, next);
 
                 updateSwapState(i+1, true, false);
             } catch(err){
+                console.log(err);
+
                 alert(err.reason);
 
                 break;

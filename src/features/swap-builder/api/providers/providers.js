@@ -1,13 +1,15 @@
 import { ChainFlipProvider } from "./chainflip";
 import { MayaProvider } from "./maya";
 import { ThorchainProvider } from "./thorchain";
+import { TokenBeamProvider } from "./tokenbeam";
 import { ZeroXProvider } from "./zerox";
 
 const providers = [
     ChainFlipProvider,
     ThorchainProvider,
     MayaProvider,
-    ZeroXProvider
+    ZeroXProvider,
+    TokenBeamProvider,
 ]
 
 export function getProvidersForSwap(swap, network){

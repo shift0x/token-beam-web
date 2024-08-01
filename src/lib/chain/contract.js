@@ -19,3 +19,23 @@ export async function callContract(rpc, abi, address, method, ...args){
 
     return result;
 }
+
+export async function estimateGas(rpc, abi, address, method, ...args) {
+    const provider = new providers.JsonRpcProvider(rpc);
+
+    const iface = new utils.Interface(abi);
+    const fragment = iface.getFunction(method);
+    const calldata = iface.encodeFunctionData(fragment, args);
+
+    const gasUsedBig = await provider.estimateGas({ to: address, data: calldata });
+    const gasPriceBig = await provider.getGasPrice();
+
+    const gasPrice =  Number(utils.formatEther(gasPriceBig));
+    const gasUsed = Number(utils.formatUnits(gasUsedBig, 0));
+
+    const gasEstimate = gasPrice * gasUsed;
+
+    console.log({gasPrice, gasUsed, gasEstimate});   
+
+    return gasEstimate;
+}
