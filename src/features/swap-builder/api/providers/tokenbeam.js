@@ -5,7 +5,7 @@ import { estimateGasCost, getRPC } from "../../../../lib/chain/rpc";
 import { callContract, estimateGas } from "../../../../lib/chain/contract";
 import { ethers } from 'ethers';
 import { getNetworkNativeToken, isNetworkSupportedByProvider } from "../network/networks";
-import logo from '../../../../assets/images/tokenbeam_logo_sm.png'
+import logo from '../../../../assets/images/uniswap_logo_sm.png'
 
 const providerId = "tokenbeam"
 
@@ -18,7 +18,7 @@ const chains = {
     },
     "421614": {},
     "11155111": {
-        router: "0xBF90F0C5D30d2DebbC940369DA435687E4C2e701",
+        router: "0xa6C0785A197F29F24DB0F3f420CDAa3De4B51abb",
         weth: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
         exchanges: {
             uniswapV3: "0x861C552fFDD44c0953cc07F672d4c7CC7CdFF68a"
@@ -48,7 +48,7 @@ function canQuote(swap){
 async function createCrossChainMessage(fromProviderId, destinationAddress, execution){
     if(fromProviderId != ChainFlipProvider.providerId) { return null; }
 
-    const gasEstimate = execution.metadata.gasEstimate * 2;
+    const gasEstimate = execution.metadata.gasEstimate * 10;
     const encoder = new ethers.utils.AbiCoder()
 
     const message = encoder.encode(["address", "address", "address", "address"], [
